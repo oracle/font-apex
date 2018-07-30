@@ -1,0 +1,17 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+<title>keyboard-o</title>
+<path d="M15 4h-13c-0.552 0-1 0.448-1 1v0 7c0 0.552 0.448 1 1 1v0h13c0.552 0 1-0.448 1-1v0-7c0-0.552-0.448-1-1-1v0zM15 12.5v-0.5h-13v-7h13v7z"></path>
+<path d="M4 6h1v1h-1v-1z"></path>
+<path d="M6 6h1v1h-1v-1z"></path>
+<path d="M8 6h1v1h-1v-1z"></path>
+<path d="M12 6h1v1h-1v-1z"></path>
+<path d="M4 8h1v1h-1v-1z"></path>
+<path d="M6 8h1v1h-1v-1z"></path>
+<path d="M8 8h1v1h-1v-1z"></path>
+<path d="M10 6h1v1h-1v-1z"></path>
+<path d="M10 8h1v1h-1v-1z"></path>
+<path d="M12 8h1v1h-1v-1z"></path>
+<path d="M4 10h1v1h-1v-1z"></path>
+<path d="M12 10h1v1h-1v-1z"></path>
+<path d="M6 10h5v1h-5v-1z"></path>
+</svg>

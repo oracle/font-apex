@@ -1,0 +1,21 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+<title>keyboard-o</title>
+<path d="M28 9h-23c-1.105 0-2 0.895-2 2v0 11c0 1.105 0.895 2 2 2v0h23c1.105 0 2-0.895 2-2v0-11c0-1.105-0.895-2-2-2v0zM29 22c0 0.552-0.448 1-1 1v0h-23c-0.552 0-1-0.448-1-1v0-11c0-0.552 0.448-1 1-1v0h23c0.552 0 1 0.448 1 1v0z"></path>
+<path d="M7 13h1v1h-1v-1z"></path>
+<path d="M10 13h1v1h-1v-1z"></path>
+<path d="M13 13h1v1h-1v-1z"></path>
+<path d="M7 16h1v1h-1v-1z"></path>
+<path d="M10 16h1v1h-1v-1z"></path>
+<path d="M13 16h1v1h-1v-1z"></path>
+<path d="M16 13h1v1h-1v-1z"></path>
+<path d="M19 13h1v1h-1v-1z"></path>
+<path d="M22 13h1v1h-1v-1z"></path>
+<path d="M16 16h1v1h-1v-1z"></path>
+<path d="M19 16h1v1h-1v-1z"></path>
+<path d="M22 16h1v1h-1v-1z"></path>
+<path d="M25 13h1v1h-1v-1z"></path>
+<path d="M25 16h1v1h-1v-1z"></path>
+<path d="M7 19h1v1h-1v-1z"></path>
+<path d="M25 19h1v1h-1v-1z"></path>
+<path d="M10 19h13v1h-13v-1z"></path>
+</svg>
