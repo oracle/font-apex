@@ -75,6 +75,10 @@
 
 /* Font APEX Modifiers
    ========================================================================== */
+.fa[class*='fam-'] {
+  position: relative;
+}
+
 .fa[class*='fam-']:after {
   display: block;
   vertical-align: bottom;
