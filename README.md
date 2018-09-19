@@ -1,6 +1,6 @@
 # Font APEX Icon Library
 
-[Browse Icons](https://oracle.github.io/font-apex/)
+## [Browse Font APEX Icons](https://oracle.github.io/font-apex/)
 
 ## Introduction
 Font APEX is an icon library initially designed [Oracle APEX](https://apex.oracle.com) and [Universal Theme](https://apex.oracle.com/ut). It was originally intended as a replacement for Font Awesome 4, the web's leading icon library, and therefore contains almost all of the Font Awesome icons, re-drawn originally on a 16x16 grid as line-icons. We wanted to make it a seamless switch to go from Font Awesome to Font APEX, and therefore use the same "fa" prefix for the icons, making it easier than ever to move to entirely new icon library.
