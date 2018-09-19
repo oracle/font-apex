@@ -200,7 +200,7 @@ fontapex.$ = function( selector ){
             var size = _isLarge() === 'true' ? L : S,
                 getEntry = function ( cl ) {
                     return '<li><div class="dm-Search-result">' +
-                        '<a href="icon.html'/*  + '?' + size */ + '#' + cl + '" class="dm-Search-icon">' +
+                        '<a href="docs/icon.html'/*  + '?' + size */ + '#' + cl + '" class="dm-Search-icon">' +
                         '<span class="t-Icon fa '+ cl +'" aria-hidden="true"></span></a>' +
                         '<div class="dm-Search-info">' +
                         '<span class="dm-Search-class">'+ cl +'</span>' +
