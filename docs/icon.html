@@ -7,19 +7,19 @@
 
   <title>Icon | Oracle Font APEX</title>
 
-  <meta name="title" itemprop="name" content="" />
-  <meta name="description" itemprop="description" content="" />
+  <meta name="title" itemprop="name" content="Oracle Font APEX" />
+  <meta name="description" itemprop="description" content="Font APEX is an open source icon library from the Oracle APEX team." />
   <meta name="keywords" content="Oracle, Font, Font Apex, Apex" />
   <meta name="version" content="21" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="oracleapex" />
-  <meta name="twitter:title" content="" />
-  <meta name="twitter:description" content="" />
+  <meta name="twitter:title" content="Oracle Font APEX" />
+  <meta name="twitter:description" content="Font APEX is an open source icon library from the Oracle APEX team." />
 
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="" />
-  <meta property="og:description" content="" />
+  <meta property="og:title" content="Oracle Font APEX" />
+  <meta property="og:description" content="Font APEX is an open source icon library from the Oracle APEX team." />
   <meta property="og:site_name" content="Oracle Font APEX" />
 
   <link rel="mask-icon" sizes="all" href="pinned-icon.svg" color="#0572CE" />
@@ -28,11 +28,11 @@
   <meta name="theme-color" content="#0572CE" />
 
   <link rel="stylesheet" href="ui.css?v=2.1" type="text/css" />
-  <link rel="stylesheet" href="../css/font-apex.min.css?v=1.0" type="text/css" />
+  <link rel="stylesheet" href="../css/font-apex.min.css?v=2.1" type="text/css" />
 </head>
-<body class="_has-modalOpen" id="top">
+<body id="top">
 
-<div class="dm-Header">
+<header role="banner" class="dm-Header">
   <div class="dm-Container">
     <a class="dm-Header-logoLink" href="../index.html">
       <svg class="dm-Header-logoIcon" viewBox="0 0 256 32">
@@ -59,9 +59,9 @@
       </li>
     </ul>
   </div>
-</div>
+</header>
 
-<div class="dm-Body">
+<main role="main" class="dm-Body">
   <div class="dm-Container">
 
     <h1 class="dm-Icon-name"></h1>
@@ -72,18 +72,18 @@
         <span class="fa" aria-hidden="true" data-icon></span>
       </div>
 
-      <div class="dm-IconBuilder">
+      <div class="dm-IconBuilder" aria-controls="icon-output">
 
-        <div class="dm-Field">
-          <div class="dm-FieldLabel">Size:</div>
+        <div class="dm-Field" role="group" aria-labelledby="icon_size_lbl">
+          <div class="dm-FieldLabel" id="icon_size_lbl">Size:</div>
           <div class="dm-RadioPillSet">
             <div class="dm-RadioPillSet-option"><input type="radio" id="icon_size_small" name="icon_size" value=""><label for="icon_size_small">Small</label></div>
             <div class="dm-RadioPillSet-option"><input type="radio" id="icon_size_large" name="icon_size" value="fa-lg"><label for="icon_size_large">Large</label></div>
           </div>
         </div>
 
-        <div class="dm-Field">
-          <div class="dm-FieldLabel">Scale:</div>
+        <div class="dm-Field" role="group" aria-labelledby="icon_scale_lbl">
+          <div class="dm-FieldLabel" id="icon_scale_lbl">Scale:</div>
           <div class="dm-RadioPillSet">
             <div class="dm-RadioPillSet-option"><input type="radio" id="icon_scale_1x" name="icon_scale" value="" checked="checked"><label for="icon_scale_1x">1x</label></div>
             <div class="dm-RadioPillSet-option"><input type="radio" id="icon_scale_2x" name="icon_scale" value="fa-2x"><label for="icon_scale_2x">2x</label></div>
@@ -93,8 +93,8 @@
           </div>
         </div>
 
-        <div class="dm-Field">
-          <label class="dm-FieldLabel" for="icon_animation">Animation:</label>
+        <div class="dm-Field" role="group" aria-labelledby="icon_animation_lbl">
+          <label class="dm-FieldLabel" for="icon_animation" id="icon_animation_lbl">Animation:</label>
           <select id="icon_animation" name="icon_animation" class="">
             <option value="" selected="selected">Static</option>
             <option value="fa-anim-spin">Spin</option>
@@ -105,8 +105,8 @@
           </select>
         </div>
 
-        <div class="dm-Field" class="dm-Field">
-          <label class="dm-FieldLabel" for="icon_rotate">Rotate:</label>
+        <div class="dm-Field" role="group" aria-labelledby="icon_rotate_lbl">
+          <label class="dm-FieldLabel" for="icon_rotate" id="icon_rotate_lbl">Rotate:</label>
           <select id="icon_rotate" name="icon_rotate" class="">
             <option value="" selected="selected">Normal</option>
             <option value="fa-flip-horizontal">Flip Horizontal</option>
@@ -117,8 +117,8 @@
           </select>
         </div>
 
-        <div class="dm-Field">
-          <label class="dm-FieldLabel" for="icon_modifier">Modifier:</label>
+        <div class="dm-Field" role="group" aria-labelledby="icon_modifier_lbl">
+          <label class="dm-FieldLabel" for="icon_modifier" id="icon_modifier_lbl">Modifier:</label>
           <select id="icon_modifier" name="icon_modifier" class="">
             <option value="" selected="selected">None</option>
             <option value="fam-25-percent">25 Percent</option>
@@ -149,8 +149,8 @@
           </select>
         </div>
 
-        <div class="dm-Field">
-          <label class="dm-FieldLabel" for="icon_modifier_status">Status</label>
+        <div class="dm-Field" role="group" aria-labelledby="icon_modifier_status_lbl">
+          <label class="dm-FieldLabel" for="icon_modifier_status" id="icon_modifier_status_lbl">Status</label>
           <select id="icon_modifier_status" name="icon_modifier_status" class="">
             <option value="fam-is-success" selected="selected">Success</option>
             <option value="fam-is-warning">Warning</option>
@@ -164,15 +164,15 @@
 
     </div>
 
-    <div class="dm-IconOutput">
+    <div id="icon-output" class="dm-IconOutput" role="region" aria-live="polite">
 
       <div class="dm-IconOutput-col dm-IconOutput-col--html">
-        HTML<br />
+        <h2>HTML</h2>
         <code class="dm-Code" id="icon_code" tabindex="0"></code>
       </div>
 
       <div class="dm-IconOutput-col dm-IconOutput-col--class">
-        Class<br />
+        <h2>Class</h2>
         <code class="dm-Code" id="icon_classes" tabindex="0"></code>
         <!-- <p class="dm-Desc">Enter in the Icon property for Buttons, Regions, and other components.</p> -->
       </div>
@@ -230,7 +230,7 @@
             <div class="pv-Alert-title">
               Access Denied
             </div>
-            <div class="pv-Alert-body">You have insufficient privilege. Please contact your Administrator for more information. Contact Administrator</div>
+            <div class="pv-Alert-body">You have insufficient privilege. Please contact your Administrator for more information.</div>
           </div>
 
         </div>
@@ -317,13 +317,13 @@
     </div>
 
   </div>
-</div>
+</main>
 
-<div class="dm-Footer">
+<footer role="contentinfo" class="dm-Footer">
   <div class="dm-Container">
     <p>&copy; Oracle</p>
   </div>
-</div>
+</footer>
 
 <script src="doc.js"></script>
 

@@ -7,19 +7,19 @@
 
   <title>Oracle Font APEX</title>
 
-  <meta name="title" itemprop="name" content="" />
-  <meta name="description" itemprop="description" content="" />
+  <meta name="title" itemprop="name" content="Oracle Font APEX" />
+  <meta name="description" itemprop="description" content="Font APEX is an open source icon library from the Oracle APEX team." />
   <meta name="keywords" content="Oracle, Font, Font Apex, Apex" />
   <meta name="version" content="21" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="oracleapex" />
-  <meta name="twitter:title" content="" />
-  <meta name="twitter:description" content="" />
+  <meta name="twitter:title" content="Oracle Font APEX" />
+  <meta name="twitter:description" content="Font APEX is an open source icon library from the Oracle APEX team." />
 
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="" />
-  <meta property="og:description" content="" />
+  <meta property="og:title" content="Oracle Font APEX" />
+  <meta property="og:description" content="Font APEX is an open source icon library from the Oracle APEX team." />
   <meta property="og:site_name" content="Oracle Font APEX" />
 
   <link rel="mask-icon" sizes="all" href="docs/pinned-icon.svg" color="#0572CE" />
@@ -28,11 +28,11 @@
   <meta name="theme-color" content="#0572CE" />
 
   <link rel="stylesheet" href="docs/ui.css?v=2.1" type="text/css" />
-  <link rel="stylesheet" href="css/font-apex.min.css?v=1.0" type="text/css" />
+  <link rel="stylesheet" href="css/font-apex.min.css?v=2.1" type="text/css" />
 </head>
 <body class="_has-modalOpen" id="top">
 
-<div class="dm-Header">
+<header class="dm-Header">
   <div class="dm-Container">
     <a class="dm-Header-logoLink" href="index.html">
       <svg class="dm-Header-logoIcon" viewBox="0 0 256 32">
@@ -59,10 +59,9 @@
       </li>
     </ul>
   </div>
-</div>
+</header>
 
-<div class="dm-Body">
-
+<main class="dm-Body">
   <div class="dm-Container">
 
     <div class="dm-Intro">
@@ -76,32 +75,32 @@
     </div>
 
     <div class="dm-SearchBox">
+      <label class="dm-AccessibleHidden" for="search">Search</label>
       <div class="dm-SearchBox-wrap">
         <span class="dm-SearchBox-icon fa fa-search" aria-hidden="true"></span>
-        <input id="search" class="dm-SearchBox-input" type="search" placeholder="Search icons..." />
+        <input id="search" class="dm-SearchBox-input" type="search" placeholder="Search icons..." aria-controls="icons" />
       </div>
       <div class="dm-SearchBox-settings">
         <!-- <input id="icon_size" class="dm-Toggle" type="checkbox" title="Toggle small/large size" /> -->
-        <div class="dm-RadioPillSet dm-RadioPillSet--large">
+        <div class="dm-RadioPillSet dm-RadioPillSet--large" role="group" aria-label="Icon Size">
           <div class="dm-RadioPillSet-option"><input type="radio" id="icon_size_small" name="icon_size" value="SMALL"><label for="icon_size_small">Small</label></div>
           <div class="dm-RadioPillSet-option"><input type="radio" id="icon_size_large" name="icon_size" value="LARGE"><label for="icon_size_large">Large</label></div>
         </div>
       </div>
     </div>
 
-    <div id="icons" class="dm-Search">
+    <div id="icons" class="dm-Search" role="region" aria-live="polite">
       <!-- The Icons -->
     </div>
 
   </div>
+</main>
 
-</div>
-
-<div class="dm-Footer">
+<footer class="dm-Footer">
   <div class="dm-Container">
     <p>&copy; Oracle</p>
   </div>
-</div>
+</footer>
 
 <script src="docs/icons.js"></script>
 <script src="docs/doc.js"></script>

@@ -2,6 +2,9 @@
 
 var fontapex = fontapex || {};
 
+//foreach for nodeList in IE
+NodeList.prototype.forEach = Array.prototype.forEach;
+
 fontapex.$ = function( selector ){
     var Sel = function ( selector ) {
         var selected = [];
@@ -14,6 +17,7 @@ fontapex.$ = function( selector ){
 
         this.elements = selected;
         this.length = this.elements.length;
+
         return this;
     };
 
@@ -173,10 +177,10 @@ fontapex.$ = function( selector ){
                 }else{
                     isLarge = "false";
                     return isLarge;
-                } 
+                }
             }
         }
-    }   
+    }
 
     var isPreviewPage = function () {
       return $( '#icon_preview' ).length > 0 ;
@@ -199,12 +203,16 @@ fontapex.$ = function( selector ){
         var assembleHTML = function (resultSet, iconCategory) {
             var size = _isLarge() === 'true' ? L : S,
                 getEntry = function ( cl ) {
-                    return '<li><div class="dm-Search-result">' +
-                        '<a href="docs/icon.html'/*  + '?' + size */ + '#' + cl + '" class="dm-Search-icon">' +
-                        '<span class="t-Icon fa '+ cl +'" aria-hidden="true"></span></a>' +
+                    return '<li>' +
+                        '<a class="dm-Search-result" href="docs/icon.html'/*  + '?' + size */ + '#' + cl + '">' +
+                        '<div class="dm-Search-icon">' +
+                        '<span class="t-Icon fa '+ cl +'" aria-hidden="true"></span>' +
+                        '</div>' +
                         '<div class="dm-Search-info">' +
                         '<span class="dm-Search-class">'+ cl +'</span>' +
-                        '</div></div></li>';
+                        '</div>' +
+                        '</a>' +
+                        '</li>';
                 };
 
             if (iconCategory) { // keywords is not provided, show everything
@@ -402,7 +410,7 @@ fontapex.$ = function( selector ){
     } else {
         $( '#icon_size_small' ).checked = true;
     }*/
-    
+
 
     $( 'a.dm-Header-logoLink' ).on( 'click', function ( e ) {
         var url = this.href,
@@ -418,7 +426,7 @@ fontapex.$ = function( selector ){
             document.getElementById( 'icon_size_small' ).checked = true;
             icons$.removeClass( CL_LARGE );
         }
-        
+
         if ( currentIcon ) {
             $( '.dm-Icon-name' )
                 .text( currentIcon );
@@ -476,16 +484,6 @@ fontapex.$ = function( selector ){
                 toggleSize( this, affectedElem );
             } );
         }
-
-        // preserve size selection in URL
-        // todo: doesn't work, need improvement
-        icons$.on( 'click', function ( e ) {
-            var url = e.target.href,
-                insertPos = url.indexOf( '#' ),
-                size = _isLarge() === 'true' ? L : S;
-
-            e.target.href = [ url.slice(0, insertPos)/*, '?' + size*/, url.slice(insertPos) ].join( '' );
-        });
     }
 
 })( fontapex );

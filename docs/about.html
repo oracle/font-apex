@@ -7,32 +7,32 @@
 
   <title>About | Oracle Font APEX</title>
 
-  <meta name="title" itemprop="name" content="" />
-  <meta name="description" itemprop="description" content="" />
+  <meta name="title" itemprop="name" content="Oracle Font APEX" />
+  <meta name="description" itemprop="description" content="Font APEX is an open source icon library from the Oracle APEX team." />
   <meta name="keywords" content="Oracle, Font, Font Apex, Apex" />
   <meta name="version" content="21" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="oracleapex" />
-  <meta name="twitter:title" content="" />
-  <meta name="twitter:description" content="" />
+  <meta name="twitter:title" content="Oracle Font APEX" />
+  <meta name="twitter:description" content="Font APEX is an open source icon library from the Oracle APEX team." />
 
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="" />
-  <meta property="og:description" content="" />
+  <meta property="og:title" content="Oracle Font APEX" />
+  <meta property="og:description" content="Font APEX is an open source icon library from the Oracle APEX team." />
   <meta property="og:site_name" content="Oracle Font APEX" />
 
-  <link rel="mask-icon" sizes="all" href="../assets/media/icons/pinned-icon.svg" color="#0572CE" />
-  <link rel="shortcut icon" type="image/ico" href="../assets/media/icons/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="192x192" href="../assets/media/icons/icon.png" />
+  <link rel="mask-icon" sizes="all" href="pinned-icon.svg" color="#0572CE" />
+  <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
+  <link rel="apple-touch-icon" sizes="192x192" href="icon.png" />
   <meta name="theme-color" content="#0572CE" />
 
   <link rel="stylesheet" href="ui.css?v=2.1" type="text/css" />
-  <link rel="stylesheet" href="../css/font-apex.min.css?v=1.0" type="text/css" />
+  <link rel="stylesheet" href="../css/font-apex.min.css?v=2.1" type="text/css" />
 </head>
-<body class="_has-modalOpen" id="top">
+<body id="top">
 
-<div class="dm-Header">
+<header role="banner" class="dm-Header">
   <div class="dm-Container">
     <a class="dm-Header-logoLink" href="../index.html">
       <svg class="dm-Header-logoIcon" viewBox="0 0 256 32">
@@ -59,32 +59,52 @@
       </li>
     </ul>
   </div>
-</div>
+</header>
 
-<div class="dm-Body">
+<main role="main" class="dm-Body">
   <div class="dm-Container">
 
     <h1>Font APEX</h1>
 
     <div class="dm-About">
 
-      <h2>What is Font APEX?</h2>
-      <p>Font APEX is an icon library designed for <a href="https://apex.oracle.com" target="_blank">Oracle APEX</a> and <a href="https://apex.oracle.com/ut" target="_blank">Universal Theme</a>. It was originally created as a replacement for <a href="https://fontawesome.com/" target="_blank">Font Awesome</a> 4.*, the web's leading icon library, and therefore contains almost all of the Font Awesome icons, re-drawn originally on a 16x16 grid as line-icons. We wanted to make it a seamless switch to go from Font Awesome to Font APEX for Oracle APEX applications, and therefore use the same "fa" prefix for the icons, making it easier than ever to move to entirely new icon library.</p>
+      <h2>Introduction</h2>
+      <p>Font APEX is an icon library initially designed <a href="https://apex.oracle.com" target="_blank">Oracle APEX</a> and <a href="https://apex.oracle.com/ut" target="_blank">Universal Theme</a>. It was originally intended as a replacement for Font Awesome 4, the web's leading icon library, and therefore contains almost all of the Font Awesome icons, re-drawn originally on a 16x16 grid as line-icons. We wanted to make it a seamless switch to go from Font Awesome to Font APEX, and therefore use the same "fa" prefix for the icons, making it easier than ever to move to entirely new icon library.</p>
+      <h2>Getting Started</h2>
+      <p>Download and extract Font APEX, and then simply include a link to the Font APEX css file in your HTML header.</p>
+      <pre>&lt;link rel="stylesheet" href="css/font-apex.min.css?v=2.1" type="text/css" /&gt;</pre>
+      <p>To display the icon in your UI, use the following markup and just replace the <code class="icon-class">fa-apex</code> with class for the icon you want to use.</p>
+      <pre>&lt;span class="fa <span class="icon-class">fa-apex</span>" aria-hidden="true"&gt;&lt;/span&gt;</pre>
+      <p>To display the larger size icons, add the <code class="modifier-class">fa-lg</code> modifier class. This will display the icon with the more detailed 32px version.</p>
+      <pre>&lt;span class="fa <span class="icon-class">fa-apex</span> <span class="modifier-class">fa-lg</span>" aria-hidden="true"&gt;&lt;/span&gt;</pre>
+      <p>You can also apply the <code class="modifier-class">force-fa-lg</code> modifier class to any container to force all icons within it to use the larger icons.</p>
 
-      <h2>What's new in Font APEX 2?</h2>
-      <p>Font APEX 2 expands upon the original Font APEX by providing the complete set of Font APEX icons at a larger size. There are now two families of icons in Font APEX: small and large. Small icons are based on a 16x16 grid and ideally suited for buttons and menus. Large icons are based on a 32x32 grid and well suited for places where you need to provide a larger graphic, such as cards, media lists, and hero regions.</p>
-      <p>Many APEX components will automatically use the large or small icons based on the context (such as Template Options), so all you need to do is focus on the icon you want. For example, when using Cards, the Block and Featured template option will automatically show the larger versions of icons where the Basic and Compact template options will use icons from the smaller set.</p>
-      <p>There are over a thousand icons and 25 modifiers that can be on top of any existing icons so you can customize any icon to fit your needs.</p>
+      <h2>Icon Library</h2>
+      <p>There are two families of icons within Font APEX &mdash; Small and Large.</p>
+      <ul>
+        <li><b>Small icons</b> are based on a 16x16 grid and ideally suited for buttons and menus.</li>
+        <li><b>Large icons</b> are based on a 32x32 grid and well suited for places where you need to provide a larger graphic, such as cards, media lists, and hero regions.</li>
+      </ul>
+      <p>Many <a href="https://apex.oracle.com" target="_blank">Oracle APEX</a> components will automatically use the small or large icons based on the context (such as Template Options), so all you need to do is focus on the icon you want. For example, when using Cards, the Block and Featured template option will automatically show the larger versions of icons where the Basic and Compact template options will use icons from the smaller set.</p>
+      <p>There are over 1000 icons in Font APEX, and there are 25 modifiers you can place on top of any existing icons so you can customize any icon to fit your needs.</p>
+      <p>Font APEX is also well suited for bi-directional languages. Icons with arrows, such as <code class="icon-class">fa-arrow-right</code> will automatically flip horizontally when viewed in a Right-to-Left language such as Arabic or Farsi. You can prevent this default behavior by adding the <code class="modifier-class">fa-dir-strict</code> modifier class.</p>
+      <h2>License</h2>
+      <p>
+        Fonts: <a href="https://scripts.sil.org/OFL" target="_blank">SIL OFL 1.1 License</a><br />
+        Icons + Code: <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a>
+      </p>
+      <p>Please read the <a href="https://github.com/oracle/font-apex/blob/master/LICENSE.txt" target="_blank">LICENSE.txt</a> file on for additional details.</p>
+
     </div>
 
   </div>
-</div>
+</main>
 
-<div class="dm-Footer">
+<footer role="contentinfo" class="dm-Footer">
   <div class="dm-Container">
     <p>&copy; Oracle</p>
   </div>
-</div>
+</footer>
 
 </body>
 </html>
