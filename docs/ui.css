@@ -36,14 +36,14 @@ body {
   min-height: 100%;
   min-height: 100vh;
   font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: Oracle Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   line-height: 1.5;
-  background-color: #f7f7f7;
+  background-color: #f1efed;
 }
 
 a {
   text-decoration: none;
-  color: #0572CE;
+  color: #00688c;
 }
 
 a:not([class]):hover {
@@ -83,8 +83,8 @@ code,
 pre {
   font-size: 90%;
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  background-color: rgba(0,0,0,.025);
-  box-shadow: inset rgba(0,0,0,.05) 0 0 0 1px;
+  background-color: rgba(0, 0, 0, .025);
+  box-shadow: inset rgba(0, 0, 0, .05) 0 0 0 1px;
 }
 
 code {
@@ -101,6 +101,7 @@ pre {
 .icon-class {
   color: #17756c;
 }
+
 .modifier-class {
   color: #9c27b0
 }
@@ -119,7 +120,8 @@ pre {
 
 .dm-Header {
   color: #fff;
-  background-color: #0572CE;
+  box-shadow: 0 12px 24px -12px rgb(0 0 0 / 30%);
+  background-color: #3a3632;
   flex-grow: 0;
 }
 
@@ -147,15 +149,15 @@ pre {
 .dm-Header-logoIcon {
   display: block;
   margin-right: 4px;
-  width: 128px;
-  height: 48px;
-  fill: currentColor;
+  width: 36px;
+  height: 24px;
+  fill: #ca4d3c;
   -ms-grid-row-align: center;
   align-self: center;
 }
 
 .dm-Header-logoLabel {
-  font-weight: 500;
+  font-weight: 700;
   font-size: 14px;
   -ms-grid-row-align: center;
   align-self: center;
@@ -192,22 +194,24 @@ pre {
   vertical-align: top;
   white-space: nowrap;
   font-size: 14px;
+  font-weight: 700;
   line-height: 16px;
   color: #fff;
-  color: rgba(255,255,255,.95);
+  color: rgba(255, 255, 255, .95);
   border-radius: 4px;
-  box-shadow: inset rgba(255,255,255,.25) 0 0 0 1px;
+  box-shadow: inset rgba(255, 255, 255, .25) 0 0 0 1px;
+  transition: box-shadow .35s ease, color .35s ease, background-color .35s ease;
 }
 
 @media screen and (min-width: 360px) {
   .dm-HeaderNav-link {
-    padding: 8px 12px;
+    padding: 14px 20px;
   }
 }
 
 .dm-HeaderNav-link:hover {
-  color: #fff;
-  box-shadow: inset #fff 0 0 0 1px;
+  color: currentColor;
+  background-color: hsla(0, 0%, 100%, .05);
 }
 
 .dm-HeaderNav-icon {
@@ -254,8 +258,8 @@ pre {
   padding-top: 32px;
   padding-bottom: 32px;
   font-size: 12px;
-  color: rgba(255,255,255,0.55);
-  background-color: #282d31;
+  color: rgba(255, 255, 255, 0.55);
+  background-color: #312d2a;
   flex-grow: 0;
   text-align: center;
 }
@@ -285,23 +289,16 @@ pre {
 }
 
 .dm-Intro-icon {
-  margin-top: -64px;
   margin-right: auto;
-/*
-  color: #fff;
-  background-color: #0572CE;
-  background-image: linear-gradient(rgba(255,255,255,.1),rgba(255,255,255,0));
-  box-shadow: rgba(0,0,0,.1) 0 8px 32px;
-*/
   margin-bottom: 24px;
   margin-left: auto;
   padding: 32px;
   width: 128px;
   height: 128px;
-  color: #0572CE;
-  background-color: #fff;
-  border-radius: 100%;
-  box-shadow: rgba(0,0,0,.1) 0 8px 32px;
+  color: #fff;
+  background-color: #477d8a;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, .1) 0 8px 32px;
 }
 
 @media screen and (max-width: 767px) {
@@ -319,7 +316,6 @@ pre {
 
 .dm-Intro h1 {
   margin-bottom: 8px;
-  font-weight: 700;
   font-size: 40px;
   line-height: 48px;
 }
@@ -376,12 +372,13 @@ pre {
   padding: 12px 12px 12px 44px;
   width: 100%;
   height: 48px;
+  font-family: Oracle Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-weight: 400;
   font-size: 20px;
   color: #000;
   background-color: #fff;
   outline: none;
-  border: 1px solid rgba(0,0,0,.15);
+  border: 1px solid rgba(0, 0, 0, .15);
   border-radius: 4px;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -389,7 +386,7 @@ pre {
 }
 
 .dm-SearchBox-input:focus {
-  border-color: #0572CE;
+  border-color: #5f7d4f;
 }
 
 .dm-SearchBox-input::-webkit-search-decoration {
@@ -417,15 +414,11 @@ pre {
 
 
 
-.dm-Search {
-
-}
-
 .dm-Search-category {
   margin-bottom: 16px;
   padding: 16px;
   background-color: #fff;
-  border: 1px solid rgba(0,0,0,.15);
+  border: 1px solid rgba(0, 0, 0, .15);
   border-radius: 8px;
 }
 
@@ -437,9 +430,8 @@ pre {
   margin: 0;
   text-align: center;
   text-transform: capitalize;
-  font-weight: 500;
+  font-weight: 700;
   font-size: 24px;
-  opacity: .65;
 }
 
 .dm-Search-list:only-child {
@@ -472,12 +464,6 @@ pre {
   }
 }
 
-@media screen and (min-width: 768px) {
-  .dm-Search-list li {
-    width: calc((100%/6) - 0.1px); /* Fix IE11 Rounding bug */
-  }
-}
-
 @media screen and (min-width: 1024px) {
   .dm-Search-list li {
     width: calc(100%/8);
@@ -491,10 +477,8 @@ pre {
   flex-direction: column;
   text-decoration: none;
   color: inherit;
-  /* background-image: linear-gradient(rgba(255,255,255,.1),rgba(255,255,255,0)); */
   outline: none;
   border-radius: 4px;
-  /* transition: .1s ease; */
 }
 
 .dm-Search-icon {
@@ -523,32 +507,24 @@ pre {
 
 .dm-Search-class {
   opacity: .65;
-  /* cursor: text;
-  -webkit-user-select: all;
-  -moz-user-select: all;
-  -ms-user-select: all;
-  user-select: all; */
 }
 
 .dm-Search-result:focus {
-  box-shadow: rgba(0,0,0,.075) 0 4px 8px, inset #0572CE 0 0 0 1px;
+  box-shadow: rgba(0, 0, 0, .075) 0 4px 8px, inset #5f7d4f 0 0 0 1px;
 }
 
 .dm-Search-result:hover {
   color: #fff;
-  background-color: #0572CE;
-  box-shadow: rgba(0,0,0,.075) 0 4px 8px;
+  background-color: #5f7d4f;
+  box-shadow: rgba(0, 0, 0, .075) 0 4px 8px;
 }
 
 .dm-Search-result:focus:hover {
-  box-shadow: rgba(0,0,0,.075) 0 4px 8px, inset #0572CE 0 0 0 1px, inset #fff 0 0 0 2px;
-}
-
-.dm-Search-result:hover .dm-Search-icon {
+  box-shadow: rgba(0, 0, 0, .075) 0 4px 8px, inset #5f7d4f 0 0 0 1px, inset #fff 0 0 0 2px;
 }
 
 .dm-Search-result:hover .dm-Search-info {
-  background-color: rgba(0,0,0,.15);
+  background-color: rgba(0, 0, 0, .15);
 }
 
 .dm-Search-result:hover .dm-Search-class {
@@ -556,7 +532,7 @@ pre {
 }
 
 .dm-Search-result:active {
-  box-shadow: inset rgba(0,0,0,.25) 0 2px 4px;
+  box-shadow: inset rgba(0, 0, 0, .25) 0 2px 4px;
 }
 
 
@@ -582,7 +558,8 @@ pre {
   margin-left: 24px;
   flex-grow: 0;
   flex-shrink: 0;
-  flex-basis: 33.3333%;;
+  flex-basis: 33.3333%;
+  ;
 }
 
 @media screen and (max-width: 767px) {
@@ -604,7 +581,7 @@ pre {
   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0iI0ZGRiI+PC9yZWN0Pgo8cmVjdCB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIGZpbGw9IiNGOEY4RjgiPjwvcmVjdD4KPHJlY3QgeD0iMTAiIHk9IjEwIiB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIGZpbGw9IiNGOEY4RjgiPjwvcmVjdD4KPC9zdmc+);
   background-position: 50%;
   background-size: 16px;
-  border: 1px solid rgba(0,0,0,.15);
+  border: 1px solid rgba(0, 0, 0, .15);
   border-radius: 8px;
   align-items: center;
   justify-content: center;
@@ -619,7 +596,7 @@ pre {
   background-color: #fff;
   outline: none;
   border-radius: 4px;
-  box-shadow: inset rgba(0,0,0,.15) 0 0 0 1px;
+  box-shadow: inset rgba(0, 0, 0, .15) 0 0 0 1px;
   cursor: pointer;
   transition: .1s ease;
   -webkit-appearance: none;
@@ -638,24 +615,24 @@ pre {
   font-weight: 700;
   font-size: 11px;
   line-height: 40px;
-  color: rgba(0,0,0,.65);
+  color: rgba(0, 0, 0, .65);
   background: transparent;
   background-color: #f0f0f0;
   border-radius: 2px;
-  box-shadow: inset rgba(0,0,0,.15) 0 0 0 1px;
+  box-shadow: inset rgba(0, 0, 0, .15) 0 0 0 1px;
   transition: .1s ease;
 }
 
 .dm-Toggle:checked {
-  background-color: #0572CE;
+  background-color: #5f7d4f;
 }
 
 .dm-Toggle:checked:after {
   left: 48px;
   content: 'Large';
-  color: #0572CE;
+  color: #5f7d4f;
   background-color: #fff;
-  box-shadow: rgba(0,0,0,.15) 0 0 0 1px;
+  box-shadow: rgba(0, 0, 0, .15) 0 0 0 1px;
 }
 
 
@@ -665,7 +642,7 @@ pre {
   width: 100%;
   background-color: #fff;
   border-radius: 4px;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,.15);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .15);
 }
 
 .dm-RadioPillSet-option {
@@ -675,7 +652,7 @@ pre {
 }
 
 .dm-RadioPillSet-option:not(:first-child) {
-  border-left: 1px solid rgba(0,0,0,.15);
+  border-left: 1px solid rgba(0, 0, 0, .15);
 }
 
 .dm-RadioPillSet-option:first-child input + label {
@@ -712,11 +689,11 @@ pre {
 .dm-RadioPillSet-option input:checked + label {
   font-weight: 700;
   color: #f9f9f9;
-  background-color: #0572CE;
+  background-color: #5f7d4f;
 }
 
 .dm-RadioPillSet-option input:focus + label {
-  box-shadow: inset #0572CE 0 0 0 1px, inset #fff 0 0 0 2px;
+  box-shadow: inset #5f7d4f 0 0 0 1px, inset #fff 0 0 0 2px;
 }
 
 .dm-RadioPillSet--large .dm-RadioPillSet-option input + label {
@@ -734,9 +711,6 @@ pre {
 .dm-RadioSet {
   display: flex;
   flex-wrap: wrap;
-}
-
-.dm-RadioSet-option {
 }
 
 .dm-RadioSet-option input {
@@ -778,7 +752,7 @@ pre {
 
 .dm-RadioSet-option input:checked + label {
   background-color: #fff;
-  box-shadow: inset #0572CE 0 0 0 1px;
+  box-shadow: inset #5f7d4f 0 0 0 1px;
 }
 
 
@@ -797,9 +771,8 @@ pre {
   margin-right: 12px;
   width: 100px;
   text-align: right;
-  /* margin-bottom: 2px; */
   font-size: 13px;
-  color: rgba(0,0,0,.65);
+  color: rgba(0, 0, 0, .65);
   flex-shrink: 0;
   -ms-grid-row-align: center;
   align-self: center;
@@ -835,7 +808,7 @@ pre {
   background-size: 32px 16px;
   background-repeat: no-repeat;
   outline: none;
-  border: 1px solid rgba(0,0,0,.2);
+  border: 1px solid rgba(0, 0, 0, .2);
   border-radius: 4px;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -847,7 +820,7 @@ pre {
 }
 
 .dm-Field select:focus {
-  border-color: #0572CE;
+  border-color: #5f7d4f;
 }
 
 
@@ -876,9 +849,6 @@ pre {
   flex-basis: auto;
 }
 
-.dm-IconOutput > .dm-IconOutput-col--class {
-}
-
 .dm-IconOutput > .dm-IconOutput-col--download {
   align-self: flex-start;
   text-align: center;
@@ -897,8 +867,8 @@ pre {
   font-size: 12px;
   font-family: monospace;
   line-height: 16px;
-  color: rgba(255,255,255,.75);
-  background-color: #31373c;
+  color: rgba(255, 255, 255, .75);
+  background-color: #3a3632;
   border-radius: 4px;
   cursor: text;
   -webkit-user-select: all;
@@ -916,7 +886,7 @@ pre {
   .dm-IconOutput > .dm-IconOutput-col {
     width: 100%;
     -ms-grid-row-align: auto;
-   align-self: auto;
+    align-self: auto;
   }
 
   .dm-IconOutput > .dm-IconOutput-col:not(:first-child) {
@@ -933,7 +903,7 @@ pre {
 
 .dm-Desc {
   font-size: 12px;
-  color: rgba(0,0,0,.5);
+  color: rgba(0, 0, 0, .5);
 }
 
 
@@ -974,11 +944,9 @@ pre {
   margin-left: 8px;
   padding: 16px;
   width: calc(50% - 16px);
-  /* background-color: #fff; */
   background-color: #FDFDFD;
-  border: 1px solid rgba(0,0,0,.15);
+  border: 1px solid rgba(0, 0, 0, .15);
   border-radius: 4px;
-  /* box-shadow: inset rgba(0,0,0,.05) 0 8px 16px; */
   cursor: default;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -1036,9 +1004,9 @@ pre {
   max-width: 760px;
   color: #000;
   background-color: #fff8f7;
-  border: 1px solid rgba(0,0,0,.1);
+  border: 1px solid rgba(0, 0, 0, .1);
   border-radius: 2px;
-  box-shadow: 0 2px 4px -2px rgba(0,0,0,.075);
+  box-shadow: 0 2px 4px -2px rgba(0, 0, 0, .075);
 }
 
 .pv-Alert-icon {
@@ -1050,7 +1018,7 @@ pre {
   width: 64px;
   height: 64px;
   vertical-align: top;
-  text-shadow: 0 1px 1px rgba(0,0,0,.1);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .1);
   font-size: 32px !important;
   line-height: 64px;
   color: #fff;
@@ -1107,7 +1075,7 @@ pre {
   outline: none;
   border: 0;
   border-radius: 2px;
-  box-shadow: 0 0 0 1px rgba(0,0,0,.125) inset;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .125) inset;
   cursor: pointer;
   -webkit-appearance: none;
   -moz-appearance: normal;
@@ -1116,30 +1084,38 @@ pre {
 
 .pv-Button:hover {
   background-color: #fff;
-  box-shadow: 0 0 0 1px rgba(0,0,0,.15) inset, 0 2px 1px rgba(0,0,0,.075);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .15) inset, 0 2px 1px rgba(0, 0, 0, .075);
 }
 
 .pv-Button:focus {
-  box-shadow: 0 0 0 1px #0572CE inset, 0 0 0 2px #FFF inset, 0 0 1px 1px rgba(5,114,206,.25);
+  box-shadow: 0 0 0 1px #5f7d4f inset, 0 0 0 2px #FFF inset, 0 0 1px 1px rgba(5, 114, 206, .25);
 }
 
 .pv-Button:active {
   background-color: #dedede;
-  box-shadow: 0 0 0 1px rgba(0,0,0,.15) inset,0 2px 2px rgba(0,0,0,.1) inset, 0 2px 1px rgba(0,0,0,.075);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .15) inset, 0 2px 2px rgba(0, 0, 0, .1) inset, 0 2px 1px rgba(0, 0, 0, .075);
 }
 
 .pv-Button--primary {
   font-weight: bold;
   color: #fff;
-  background-color: #0572CE;
+  background-color: #5f7d4f;
 }
 
 .pv-Button--primary:hover {
-  background-color: #0680e7;
+  background-color: #577346;
 }
 
 .pv-Button--primary:active {
-  background-color: #0464b5;
+  background-color: #4f693f;
+}
+
+.dm-Preview .pv-Button {
+  pointer-events: none;
+}
+
+.dm-Preview .pv-Button--primary {
+  background-color: #0572CE !important;
 }
 
 .pv-Button .fa {
@@ -1149,16 +1125,15 @@ pre {
 
 
 
-
 .pv-Card {
   margin: 16px auto;
   max-width: 100%;
   width: 320px;
   background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid rgba(0,0,0,.075);
+  border: 1px solid rgba(0, 0, 0, .075);
   border-radius: 2px;
-  box-shadow: 0 2px 4px -2px rgba(0,0,0,.075);
+  box-shadow: 0 2px 4px -2px rgba(0, 0, 0, .075);
 }
 
 .pv-Card-icon {
@@ -1172,10 +1147,10 @@ pre {
   width: 64px;
   height: 64px;
   vertical-align: top;
-  text-shadow: 0 1px 1px rgba(0,0,0,.1);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .1);
   font-size: 32px !important;
   line-height: 64px;
-  background-color: rgba(0,0,0,.1);
+  background-color: rgba(0, 0, 0, .1);
   border-radius: 100%;
 }
 
@@ -1207,7 +1182,7 @@ pre {
   text-overflow: ellipsis;
   font-size: 14px;
   line-height: 20px;
-  border-top: 1px solid rgba(0,0,0,.075);
+  border-top: 1px solid rgba(0, 0, 0, .075);
 }
 
 
@@ -1217,7 +1192,7 @@ pre {
   padding: 0;
   list-style: none;
   border: 1px solid #d0d0d0;
-  box-shadow: 0 2px 4px -2px rgba(0,0,0,.075);
+  box-shadow: 0 2px 4px -2px rgba(0, 0, 0, .075);
 }
 
 .pv-MediaList li {
@@ -1275,14 +1250,13 @@ pre {
 }
 
 
-
 .pv-HeroRegion {
   display: flex;
   margin-bottom: 16px;
   padding: 16px;
   width: 100%;
   background-color: #fff;
-  box-shadow: 0 1px 0 rgba(0,0,0,.1);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .1);
   align-self: flex-start;
 }
 

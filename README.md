@@ -8,7 +8,7 @@ Font APEX is an icon library initially designed [Oracle APEX](https://apex.oracl
 ## Getting Started
 Download and extract Font APEX, and then simply include a link to the Font APEX css file in your HTML header.
 ```
-<link rel="stylesheet" href="css/font-apex.min.css?v=2.1" type="text/css" />
+<link rel="stylesheet" href="css/font-apex.min.css?v=2.2" type="text/css" />
 ```
 
 To display the icon in your UI, use the following markup and just replace the `fa-apex` with class for the icon you want to use.
