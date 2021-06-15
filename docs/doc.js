@@ -400,6 +400,11 @@ fontapex.$ = function( selector ){
         $( '#icon_code' ).text( iconHTML );
         $( '#icon_classes' ).text( iconClasses );
 
+        // output character code
+        var iconString = window.getComputedStyle(document.querySelector('#icon_preview [data-icon]'), ':before').getPropertyValue('content');
+        var iconChar = '\\' + iconString.charCodeAt(1).toString(16);
+        $( '#icon_char').text( iconChar );
+
         _isLarge( iconSize === 'fa-lg');
     };
 
