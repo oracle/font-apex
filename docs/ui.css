@@ -1061,7 +1061,7 @@ pre {
   margin: 8px;
 }
 
-.pv-Button {
+.pv-Button, .pv-Buttontwo, .pv-Buttonthree, .pv-Buttonfour {
   display: inline-block;
   margin: 0;
   padding: 8px 12px;

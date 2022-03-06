@@ -362,6 +362,24 @@ fontapex.$ = function( selector ){
             window.open( '../svgs/' + size + '/' + currentIcon.replace( 'fa-', '' ) + '.svg' );
         });
     };
+    var downlodPNGBtn = function () {
+        $( 'button.pv-Buttontwo' ).on( 'click', function () {
+            var size = _isLarge() === 'true' ? L.toLowerCase() : S.toLowerCase();
+            window.open( '../pngs/' + size + '/' + currentIcon.replace( 'fa-', '' ) + '.png' );
+        });
+    };
+    var downlodEPSBtn = function () {
+        $( 'button.pv-Buttonthree' ).on( 'click', function () {
+            var size = _isLarge() === 'true' ? L.toLowerCase() : S.toLowerCase();
+            window.open( '../epss/' + size + '/' + currentIcon.replace( 'fa-', '' ) + '.eps' );
+        });
+    };
+    var downlodGIFBtn = function () {
+        $( 'button.pv-Buttonfour' ).on( 'click', function () {
+            var size = _isLarge() === 'true' ? L.toLowerCase() : S.toLowerCase();
+            window.open( '../gifs/' + size + '/' + currentIcon.replace( 'fa-', '' ) + '.gif' );
+        });
+    };
 
     var renderIconPreview = function() {
         var iconPreview$        = $( '#icon_preview' ),
@@ -442,6 +460,9 @@ fontapex.$ = function( selector ){
 
             renderIconPreview();
             downlodSVGBtn();
+            downlodPNGBtn();
+            downlodEPSBtn();
+            downlodGIFBtn();
         }
 
         // icon preview modifiers
