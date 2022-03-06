@@ -368,10 +368,10 @@ fontapex.$ = function( selector ){
             window.open( '../pngs/' + size + '/' + currentIcon.replace( 'fa-', '' ) + '.png' );
         });
     };
-    var downlodEPSBtn = function () {
+    var downlodPDFBtn = function () {
         $( 'button.pv-Buttonthree' ).on( 'click', function () {
             var size = _isLarge() === 'true' ? L.toLowerCase() : S.toLowerCase();
-            window.open( '../epss/' + size + '/' + currentIcon.replace( 'fa-', '' ) + '.eps' );
+            window.open( '../pdfs/' + size + '/' + currentIcon.replace( 'fa-', '' ) + '.pdf' );
         });
     };
     var downlodGIFBtn = function () {
@@ -461,7 +461,7 @@ fontapex.$ = function( selector ){
             renderIconPreview();
             downlodSVGBtn();
             downlodPNGBtn();
-            downlodEPSBtn();
+            downlodPDFBtn();
             downlodGIFBtn();
         }
 

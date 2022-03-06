@@ -9,10 +9,10 @@ png:
 		rsvg-convert svgs/small/$$i.svg > pngs/small/$$i.png; \
 	done
 eps:
-	mkdir -p epss/large epss/small
+	mkdir -p pdfs/large pdfs/small
 	for i in $(FILE);do \
-		rsvg-convert -f eps svgs/large/$$i.svg > epss/large/$$i.eps; \
-		rsvg-convert -f eps svgs/small/$$i.svg > epss/small/$$i.eps; \
+		rsvg-convert -f pdf svgs/large/$$i.svg > pdfs/large/$$i.pdf; \
+		rsvg-convert -f pdf svgs/small/$$i.svg > pdfs/small/$$i.pdf; \
 	done
 gif:
 	mkdir -p gifs/large gifs/small
@@ -22,4 +22,4 @@ gif:
 	done
 
 clean:
-	rm -r pngs epss gifs
+	rm -r pngs pdfs gifs
