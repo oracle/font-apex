@@ -17,9 +17,11 @@ pdf:
 gif:
 	mkdir -p gifs/large gifs/small
 	for i in $(FILE);do \
-		rsvg-convert svgs/large/$$i.svg | convert png:- gif:- > gifs/large/$$i.gif; \
-		rsvg-convert svgs/small/$$i.svg | convert png:- gif:- > gifs/small/$$i.gif; \
+		convert pngs/large/$$i.png gifs/large/$$i.gif; \
+		convert pngs/small/$$i.png gifs/small/$$i.gif; \
 	done
 
 clean:
-	rm -r pngs pdfs gifs
+	rm -fr pngs
+	rm -fr pdfs
+	rm -fr gifs

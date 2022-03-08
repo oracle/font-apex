@@ -1082,16 +1082,16 @@ pre {
   appearance: normal;
 }
 
-.pv-Button:hover {
+.pv-Button:hover, .pv-Buttontwo:hover, .pv-Buttonthree:hover, .pv-Buttonfour:hover {
   background-color: #fff;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, .15) inset, 0 2px 1px rgba(0, 0, 0, .075);
 }
 
-.pv-Button:focus {
+.pv-Button:focus, .pv-Buttontwo:focus, .pv-Buttonthree:focus, .pv-Buttonfour:focus {
   box-shadow: 0 0 0 1px #5f7d4f inset, 0 0 0 2px #FFF inset, 0 0 1px 1px rgba(5, 114, 206, .25);
 }
 
-.pv-Button:active {
+.pv-Button:active, .pv-Buttontwo:active, .pv-Buttonthree:active, .pv-Buttonfour:active {
   background-color: #dedede;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, .15) inset, 0 2px 2px rgba(0, 0, 0, .1) inset, 0 2px 1px rgba(0, 0, 0, .075);
 }
