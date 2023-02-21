@@ -37,7 +37,16 @@ Font APEX is also well suited for bi-directional languages. Icons with arrows, s
 
 You can see all of the Font APEX icons on the [Oracle APEX - Universal Theme Sample Application](https://apex.oracle.com/fontapex).
 
-# License
+## Contributing
+
+This project is not accepting external contributions at this time. For bugs or enhancement requests, please file a GitHub issue unless it’s security related. When filing a bug remember that the better written the bug is, the more likely it is to be fixed. If you think you’ve found a security vulnerability, do not raise a GitHub issue and follow the instructions in our [security policy](./SECURITY.md).
+
+## Security
+
+Please consult the [security guide](./SECURITY.md) for our responsible security vulnerability disclosure process
+
+## License
+
 Fonts: SIL OFL 1.1 License (https://scripts.sil.org/OFL)
 Icons + Code: MIT License (https://opensource.org/licenses/MIT)
 
