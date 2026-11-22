@@ -1082,6 +1082,10 @@ pre {
   appearance: normal;
 }
 
+#icon_download {
+  text-decoration: none;
+}
+
 .pv-Button:hover {
   background-color: #fff;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, .15) inset, 0 2px 1px rgba(0, 0, 0, .075);

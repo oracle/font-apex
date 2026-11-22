@@ -358,17 +358,6 @@ fontapex.$ = function( selector ){
         }
     };
 
-    var downlodSVGBtn = function () {
-        $( 'button.pv-Button' ).on( 'click', function () {
-            var size = $( '[name="icon_size"]' ).val() === 'fa-lg' ? 'large' : 'small',
-                source = iconIndex[currentIcon];
-
-            if ( source ) {
-                window.open( '../svgs/' + size + '/' + source.sourceName + '.svg' );
-            }
-        });
-    };
-
     var renderIconPreview = function() {
         var iconPreview$        = $( '#icon_preview' ),
             iconHTML,
@@ -411,7 +400,15 @@ fontapex.$ = function( selector ){
         var iconChar = '\\' + iconString.charCodeAt(1).toString(16);
         $( '#icon_char').text( iconChar );
 
-        _isLarge( iconSize === 'fa-lg');
+        var size = iconSize === 'fa-lg' ? 'large' : 'small',
+            downloadLink = document.getElementById( 'icon_download' ),
+            source = iconIndex[currentIcon];
+
+        if ( source ) {
+            downloadLink.href = '../svgs/' + size + '/' + source.sourceName + '.svg';
+        }
+
+        _isLarge( iconSize === 'fa-lg' );
     };
 
 
@@ -447,7 +444,6 @@ fontapex.$ = function( selector ){
                 .addClass( currentIcon );
 
             renderIconPreview();
-            downlodSVGBtn();
         }
 
         // icon preview modifiers
