@@ -192,35 +192,36 @@ fontapex.$ = function( selector ){
     };
 
     var buildSearchIndex = function ( catalog ) {
-        Object.keys( catalog ).forEach(function ( category ) {
-            var label = category.toUpperCase();
+        var categories = new Map();
 
-            if ( !browseCategories.has( label ) ) {
-                browseCategories.set( label, new Set() );
+        Object.keys( catalog ).forEach(function ( className ) {
+            var icon = catalog[className],
+                labels = icon.categories || [];
+
+            if ( !labels.length ) {
+                return;
             }
 
-            catalog[category].forEach(function ( icon ) {
-                browseCategories.get( label ).add( icon.name );
+            var name = normalizeSearch( className.slice( 3 ) );
+            searchIndex.set( className, {
+                className: className,
+                name: name,
+                words: name.split( '-' ),
+                tags: ( icon.filters || '' ).split( ',' ).map( normalizeSearch ).filter( Boolean )
+            });
 
-                if ( !searchIndex.has( icon.name ) ) {
-                    var name = normalizeSearch( icon.name.slice( 3 ) );
-                    searchIndex.set( icon.name, {
-                        className: icon.name,
-                        name: name,
-                        words: name.split( '-' ),
-                        tags: new Set()
-                    });
+            labels.forEach(function ( category ) {
+                var label = category.toUpperCase();
+
+                if ( !categories.has( label ) ) {
+                    categories.set( label, new Set() );
                 }
-
-                var tags = searchIndex.get( icon.name ).tags;
-                ( icon.filters || '' ).split( ',' ).map( normalizeSearch ).filter( Boolean ).forEach(function ( tag ) {
-                    tags.add( tag );
-                });
+                categories.get( label ).add( className );
             });
         });
 
-        browseCategories.forEach(function ( names, label ) {
-            browseCategories.set( label, Array.from( names ).sort() );
+        Array.from( categories.keys() ).sort().forEach(function ( label ) {
+            browseCategories.set( label, Array.from( categories.get( label ) ).sort() );
         });
     };
 
@@ -275,7 +276,7 @@ fontapex.$ = function( selector ){
                     rank += 100 * icon.words.filter(function ( word ) {
                         return word.includes( key );
                     }).length;
-                } else if ( Array.from( icon.tags ).some(function ( tag ) {
+                } else if ( icon.tags.some(function ( tag ) {
                     return tag.startsWith( key );
                 }) ) {
                     rank = 1;
@@ -356,7 +357,7 @@ fontapex.$ = function( selector ){
             source = iconIndex[currentIcon];
 
         if ( source ) {
-            downloadLink.href = '../svgs/' + size + '/' + source.sourceName + '.svg';
+            downloadLink.href = '../svgs/' + size + '/' + ( source.sourceName || currentIcon.replace( /^(fa|fam)-/, '' ) ) + '.svg';
         }
 
         _isLarge( iconSize === 'fa-lg' );
@@ -413,8 +414,8 @@ fontapex.$ = function( selector ){
             icons$.removeClass( CL_LARGE );
         }
 
-        if ( fa.icons ) {
-            buildSearchIndex( fa.icons );
+        if ( fa.iconIndex ) {
+            buildSearchIndex( iconIndex );
 
             var searchInput = document.getElementById( 'search' );
             renderIcons( searchInput.value );
