@@ -205,6 +205,14 @@ pre {
   align-self: center;
 }
 
+.dm-Header-version {
+  margin-left: 8px;
+  color: rgba(255, 255, 255, .65);
+  font-size: 12px;
+  font-weight: 400;
+  align-self: center;
+}
+
 @media screen and (min-width: 360px) {
   .dm-Header-logoIcon {
     margin-right: 8px;
