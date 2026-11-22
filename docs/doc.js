@@ -11,7 +11,7 @@
     const sizePreference = 'large.fontapex';
     let large = false;
 
-    for (const [code, country] of Object.entries(catalog.flags || {})) {
+    for (const [code, country] of Object.entries(catalog.flags)) {
         const className = 'fa-flag-' + code;
         const alternateNames = countryAliases[code] || [];
         icons.set(className, { categories: ['FLAGS'], country, alternateNames });
