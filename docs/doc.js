@@ -158,9 +158,8 @@ fontapex.$ = function( selector ){
             : 'fa-apex',
         isLarge,
         timeout,
-        apexIcons,
-        apexIconKeys,
-        flattened = [],
+        browseCategories = new Map(),
+        searchIndex = new Map(),
         icons$ = $( '#icons' );
 
     var _isLarge = function(value){
@@ -188,162 +187,114 @@ fontapex.$ = function( selector ){
       return $( '#icon_preview' ).length > 0 ;
     };
 
-    var highlight = function (txt, str) {
-        return txt.replace(new RegExp("(" + str + ")","gi"), '<span class="highlight">$1</span>');
+    var normalizeSearch = function ( value ) {
+        return value.trim().toLowerCase().replace(/\s+/g, '-');
     };
 
-    var renderIcons = function( opts ){
-        var output;
+    var buildSearchIndex = function ( catalog ) {
+        Object.keys( catalog ).forEach(function ( category ) {
+            var label = category.toUpperCase();
 
-        clearTimeout(timeout);
-        var debounce = opts.debounce || 50,
-            key = opts.filterString || '',
-            keyLength = key.length;
+            if ( !browseCategories.has( label ) ) {
+                browseCategories.set( label, new Set() );
+            }
 
-        key = key.toUpperCase().trim();
+            catalog[category].forEach(function ( icon ) {
+                browseCategories.get( label ).add( icon.name );
 
-        var assembleHTML = function (resultSet, iconCategory) {
-            var size = _isLarge() === 'true' ? L : S,
-                getEntry = function ( cl ) {
-                    return '<li>' +
-                        '<a class="dm-Search-result" href="docs/icon.html'/*  + '?' + size */ + '#' + cl + '">' +
-                        '<div class="dm-Search-icon">' +
-                        '<span class="t-Icon fa '+ cl +'" aria-hidden="true"></span>' +
-                        '</div>' +
-                        '<div class="dm-Search-info">' +
-                        '<span class="dm-Search-class">'+ cl +'</span>' +
-                        '</div>' +
-                        '</a>' +
-                        '</li>';
-                };
-
-            if (iconCategory) { // keywords is not provided, show everything
-                output = output + '<div class="dm-Search-category">';
-                output = output + '<h2 class="dm-Search-title">' + iconCategory.replace(/_/g,' ').toLowerCase()+ ' Icons</h2>';
-                output = output + '<ul class="dm-Search-list">';
-                resultSet.forEach(function(iconClass){
-                    output = output + getEntry( iconClass.name );
-                });
-                output = output + '</ul>';
-                output = output + '</div>';
-            } else {
-                if (resultSet.length > 0) {
-                    resultSet.forEach(function (iconClass) {
-                        output = output + getEntry( iconClass.name );
+                if ( !searchIndex.has( icon.name ) ) {
+                    var name = normalizeSearch( icon.name.slice( 3 ) );
+                    searchIndex.set( icon.name, {
+                        className: icon.name,
+                        name: name,
+                        words: name.split( '-' ),
+                        tags: new Set()
                     });
                 }
-            }
-        };
 
-        var search = function () {
-            if (key.length === 1) {
-                return;
-            }
-
-            var resultSet = [],
-                resultsTitle = '';
-
-            output = '';
-
-            if (key === '') { // no keywords provided, display all icons.
-                apexIconKeys.forEach(function(iconCategory){
-                    resultSet = apexIcons[iconCategory].sort(function (a, b) {
-                        if (a.name < b.name) {
-                            return -1;
-                        } else if (a.name > b.name) {
-                            return 1;
-                        } else {
-                            return 0;
-                        }
-                    }); // no keywords, no search. Just sort.
-                    assembleHTML(resultSet, iconCategory);
+                var tags = searchIndex.get( icon.name ).tags;
+                ( icon.filters || '' ).split( ',' ).map( normalizeSearch ).filter( Boolean ).forEach(function ( tag ) {
+                    tags.add( tag );
                 });
-            } else {
-                resultSet = flattened.filter(function(curVal){
-                    var name     = curVal.name.toUpperCase().slice(3), // remove the prefix 'fa-'
-                        nameArr,
-                        filters  = curVal.filters ? curVal.filters.toUpperCase() : '',
-                        filtersArr,
-                        firstXletters,
-                        rank = 0,
-                        i, filterArrLen, j, nameArrLen;
+            });
+        });
 
-                    if (key.indexOf(' ') > 0) {
-                        key = key.replace(' ', '-');
+        browseCategories.forEach(function ( names, label ) {
+            browseCategories.set( label, Array.from( names ).sort() );
+        });
+    };
+
+    var renderIconGroup = function ( title, names ) {
+        var entries = names.map(function ( name ) {
+            return '<li><a class="dm-Search-result" href="docs/icon.html#' + name + '">' +
+                '<div class="dm-Search-icon"><span class="t-Icon fa ' + name + '" aria-hidden="true"></span></div>' +
+                '<div class="dm-Search-info"><span class="dm-Search-class">' + name + '</span></div>' +
+                '</a></li>';
+        }).join( '' );
+
+        return '<div class="dm-Search-category"><h2 class="dm-Search-title">' + title + '</h2>' +
+            ( entries ? '<ul class="dm-Search-list">' + entries + '</ul>' : '' ) + '</div>';
+    };
+
+    var renderIcons = function ( query ) {
+        var key = normalizeSearch( query ),
+            results = document.getElementById( 'icons' );
+
+        clearTimeout( timeout );
+
+        if ( !key ) {
+            var groups = [];
+            browseCategories.forEach(function ( names, category ) {
+                groups.push( renderIconGroup( category.replace(/_/g, ' ').toLowerCase() + ' Icons', names ) );
+            });
+            results.innerHTML = groups.join( '' );
+            return;
+        }
+
+        if ( key.length === 1 ) {
+            results.innerHTML = renderIconGroup( 'Enter at least two characters to search', [] );
+            return;
+        }
+
+        timeout = setTimeout(function () {
+            var matches = [];
+
+            searchIndex.forEach(function ( icon ) {
+                var rank = 0;
+
+                if ( icon.name.includes( key ) ) {
+                    if ( icon.words.length === 1 ) {
+                        rank += 1000;
                     }
-
-                    if (name.indexOf(key) >= 0) {
-                        // convert names to array for ranking
-                        nameArr = name.split('-');
-                        nameArrLen = nameArr.length;
-                        // rank: doesn't have "-"
-                        if (name.indexOf('-') < 0) {
-                            rank += 1000;
-                        }
-                        // rank: matches the whole name
-                        if (name.length === keyLength) {
-                            rank += 1000;
-                        }
-                        // rank: matches partial beginning
-                        firstXletters = nameArr[0].slice(0, keyLength);
-                        if (firstXletters.indexOf(key) >= 0) {
-                            rank += 1000;
-                        }
-                        for (j = 0; j < nameArrLen; j++) {
-                            if (nameArr[j]) {
-                                if (nameArr[j].indexOf(key) >= 0) {
-                                    rank += 100;
-                                }
-                            }
-                        }
-                        curVal.rank = rank;
-                        return true;
+                    if ( icon.name === key ) {
+                        rank += 1000;
                     }
-
-                    // convert words in filters to array
-                    filtersArr = filters.split(',');
-                    filterArrLen = filtersArr.length;
-                    // keywords matches in filters field.
-                    for (i = 0; i < filterArrLen; i ++) {
-                        firstXletters = filtersArr[i].slice(0, keyLength);
-                        if (firstXletters.indexOf(key) >= 0) {
-                            curVal.rank = 1;
-                            return true;
-                        }
+                    if ( icon.words[0].startsWith( key ) ) {
+                        rank += 1000;
                     }
-                });
+                    rank += 100 * icon.words.filter(function ( word ) {
+                        return word.includes( key );
+                    }).length;
+                } else if ( Array.from( icon.tags ).some(function ( tag ) {
+                    return tag.startsWith( key );
+                }) ) {
+                    rank = 1;
+                }
 
-                resultSet.sort(function (a, b) {
-                    var ar = a.rank,
-                        br = b.rank;
-                    if (ar > br) {
-                        return -1;
-                    } else if (ar < br) {
-                        return 1;
-                    } else {
-                        return 0;
-                    }
-                });
+                if ( rank ) {
+                    matches.push({ name: icon.className, rank: rank });
+                }
+            });
 
-                assembleHTML(resultSet);
-
-                // search results UI doesn't require category title
-                resultsTitle = resultSet.length === 0 ? 'No results' : resultSet.length + ' Results';
-                output = '<div class="dm-Search-category">' +
-                    '<h2 class="dm-Search-title">' + resultsTitle + '</h2>' +
-                    '<ul class="dm-Search-list">' +
-                    output +
-                    '</ul>';
-                output = output + '</div>';
-            }
-
-            // finally add output
-            document.getElementById( 'icons' ).innerHTML = output;
-        };
-
-        timeout = setTimeout(function() {
-            search();
-        }, debounce);
+            matches.sort(function ( a, b ) {
+                return b.rank - a.rank;
+            });
+            var names = matches.map(function ( match ) {
+                return match.name;
+            });
+            var title = names.length ? names.length + ( names.length === 1 ? ' result' : ' results' ) : 'No results';
+            results.innerHTML = renderIconGroup( title, names );
+        }, 250 );
     };
 
     var toggleSize = function ( that, affected ) {
@@ -463,27 +414,13 @@ fontapex.$ = function( selector ){
         }
 
         if ( fa.icons ) {
-            renderIcons({});
+            buildSearchIndex( fa.icons );
 
-            flattened = function () {
-                var set = [];
-
-                apexIcons    = fa.icons;
-                apexIconKeys = Object.keys( apexIcons );
-
-                apexIconKeys.forEach(function(iconCategory) {
-                    set = set.concat( apexIcons[iconCategory] );
-                });
-
-                return set;
-            }();
-
-            $( '#search' ).on( 'keyup', function ( e ) {
-                renderIcons({
-                    debounce: 250,
-                    filterString: e.target.value
-                });
-            } );
+            var searchInput = document.getElementById( 'search' );
+            renderIcons( searchInput.value );
+            searchInput.addEventListener( 'input', function () {
+                renderIcons( searchInput.value );
+            });
 
             // Size Toggle
             $( '[name="icon_size"]' ).on( 'click', function ( e ) {
