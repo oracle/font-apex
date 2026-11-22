@@ -151,9 +151,11 @@ fontapex.$ = function( selector ){
         L = 'LARGE',
         S = 'SMALL',
         CL_LARGE = 'force-fa-lg',
-        wLocation = window.location,
-        currentIcon = wLocation.hash.replace( '#', '' ) || 'fa-apex',
-        //isLarge = wLocation.search.indexOf( L ) > -1,
+        requestedIcon = window.location.hash.slice( 1 ),
+        iconIndex = fa.iconIndex || {},
+        currentIcon = Object.prototype.hasOwnProperty.call( iconIndex, requestedIcon )
+            ? requestedIcon
+            : 'fa-apex',
         isLarge,
         timeout,
         apexIcons,
@@ -358,8 +360,12 @@ fontapex.$ = function( selector ){
 
     var downlodSVGBtn = function () {
         $( 'button.pv-Button' ).on( 'click', function () {
-            var size = _isLarge() === 'true' ? L.toLowerCase() : S.toLowerCase();
-            window.open( '../svgs/' + size + '/' + currentIcon.replace( 'fa-', '' ) + '.svg' );
+            var size = $( '[name="icon_size"]' ).val() === 'fa-lg' ? 'large' : 'small',
+                source = iconIndex[currentIcon];
+
+            if ( source ) {
+                window.open( '../svgs/' + size + '/' + source.sourceName + '.svg' );
+            }
         });
     };
 
