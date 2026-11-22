@@ -1426,6 +1426,29 @@ pre {
 }
 
 
+@supports (corner-shape: squircle) {
+
+  code,
+  pre,
+  .dm-HeaderNav-link,
+  .dm-SearchBox-input,
+  .dm-Search-result,
+  .dm-Search-category,
+  .dm-IconPreview,
+  .dm-RadioPillSet,
+  .dm-Field select,
+  .dm-Code,
+  .dm-CopyButton,
+  .dm-Preview,
+  .pv-TreeNav ul,
+  .pv-Alert,
+  .pv-Button,
+  .pv-Card,
+  .pv-HeroRegion {
+    corner-shape: squircle;
+  }
+}
+
 @view-transition {
   navigation: auto;
 }
