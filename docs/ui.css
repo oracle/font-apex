@@ -1382,6 +1382,32 @@ pre {
   margin: 12px auto 0;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    view-transition-name: root;
+  }
+
+  .dm-HeaderNav-link,
+  .dm-Search-result,
+  .pv-Button,
+  .dm-Field select,
+  .dm-RadioPillSet-option input + label {
+    transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
 .dm-Search-class,
 .dm-Code,
 .dm-Icon-name,
@@ -1397,4 +1423,9 @@ pre {
 .dm-SearchBox[hidden],
 #icon_details [hidden] {
   display: none;
+}
+
+
+@view-transition {
+  navigation: auto;
 }
