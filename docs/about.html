@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html class="no-js" itemscope="itemscope" itemtype="http://schema.org/WebPage" lang="en">
+<html itemscope="itemscope" itemtype="https://schema.org/WebPage" lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
   <title>About | Oracle Font APEX</title>
 
   <meta name="title" itemprop="name" content="Oracle Font APEX" />
   <meta name="description" itemprop="description" content="Font APEX is an open source icon library from the Oracle APEX team." />
   <meta name="keywords" content="Oracle, Font, Font Apex, Apex" />
-  <meta name="version" content="22" />
+  <meta name="version" content="2.5.1" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="oracleapex" />
@@ -22,91 +22,118 @@
   <meta property="og:description" content="Font APEX is an open source icon library from the Oracle APEX team." />
   <meta property="og:site_name" content="Oracle Font APEX" />
 
-  <link rel="mask-icon" sizes="all" href="pinned-icon.svg" color="#0572CE" />
+  <link rel="mask-icon" sizes="all" href="pinned-icon.svg" color="#00688c" />
   <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="192x192" href="icon.png" />
-  <meta name="theme-color" content="#0572CE" />
+  <meta name="theme-color" content="#302d2a" />
 
-  <link rel="stylesheet" href="ui.css?v=2.2" type="text/css" />
-  <link rel="stylesheet" href="https://static.oracle.com/cdn/fnd/gallery/2004.1.0/OracleFont/OracleFont.min.css" type="text/css">
-  <link rel="stylesheet" href="../css/font-apex.min.css?v=2.2" type="text/css" />
+  <link rel="stylesheet" href="ui.css?v=2.5.1" type="text/css" />
+  <link rel="stylesheet" href="../css/font-apex.min.css?v=2.5.1" type="text/css" />
 </head>
+
 <body id="top">
+  <a class="dm-SkipLink" href="#main-content">Skip to main content</a>
 
-<header role="banner" class="dm-Header">
-  <div class="dm-Container">
-    <a class="dm-Header-logoLink" href="../index.html">
-      <svg class="dm-Header-logoIcon" role="img" aria-label="Oracle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 24">
-        <title id="dm-Header-logoText">Oracle</title>
-        <path d="M24.6 0C30.9 0 36 5.4 36 12s-5.1 12-11.4 12H11.4C5.1 24 0 18.6 0 12S5.1 0 11.4 0h13.2zm-.3 4H11.7c-4.1 0-7.4 3.6-7.4 8s3.3 8 7.4 8h12.6c4.1 0 7.4-3.6 7.4-8s-3.3-8-7.4-8z" fill-rule="evenodd" clip-rule="evenodd"></path>
-      </svg>
-      <span class="dm-Header-logoLabel">
-        Font APEX
-      </span>
-    </a>
-    <ul class="dm-HeaderNav">
-      <li>
-        <a class="dm-HeaderNav-link" href="https://github.com/oracle/font-apex">
-          <svg class="dm-HeaderNav-icon" aria-hidden="true" viewBox="0 0 16 16">
-            <path d="M8 1.172a7.002 7.002 0 0 0-2.215 13.644c.355.065.483-.154.483-.336 0-.165-.009-.72-.009-1.304 0 0-1.951.419-2.361-.829 0 0-.32-.812-.775-1.022 0 0-.638-.437.046-.428 0 0 .693.054 1.076.72.611 1.075 1.632.765 2.032.583.064-.456.246-.756.446-.939-1.559-.173-3.19-.775-3.19-3.453 0-.767.273-1.395.72-1.878-.073-.183-.31-.894.064-1.86.593-.182 1.933.72 1.933.72a6.626 6.626 0 0 1 3.5 0s1.34-.902 1.923-.72c.383.966.145 1.677.072 1.86a2.69 2.69 0 0 1 .72 1.878c0 2.688-1.64 3.281-3.199 3.453.255.219.474.638.474 1.294v1.924c0 .182.119.401.474.336A7.002 7.002 0 0 0 8 1.172z"/>
-          </svg>
-          <span class="dm-HeaderNav-label">View on GitHub</span>
-        </a>
-      </li>
-      <li>
-        <a class="dm-HeaderNav-link" href="about.html">
-          <span class="dm-HeaderNav-icon fa fa-info-circle-o" aria-hidden="true"></span>
-          <span class="dm-HeaderNav-label">About</span>
-        </a>
-      </li>
-    </ul>
-  </div>
-</header>
-
-<main role="main" class="dm-Body">
-  <div class="dm-Container">
-
-    <h1>Font APEX</h1>
-
-    <div class="dm-About">
-
-      <h2>Introduction</h2>
-      <p>Font APEX is an icon library initially designed <a href="https://apex.oracle.com" target="_blank">Oracle APEX</a> and <a href="https://apex.oracle.com/ut" target="_blank">Universal Theme</a>. It was originally intended as a replacement for Font Awesome 4, the web's leading icon library, and therefore contains almost all of the Font Awesome icons, re-drawn originally on a 16x16 grid as line-icons. We wanted to make it a seamless switch to go from Font Awesome to Font APEX, and therefore use the same "fa" prefix for the icons, making it easier than ever to move to entirely new icon library.</p>
-      <h2>Getting Started</h2>
-      <p>Download and extract Font APEX, and then simply include a link to the Font APEX css file in your HTML header.</p>
-      <pre>&lt;link rel="stylesheet" href="css/font-apex.min.css?v=2.2" type="text/css" /&gt;</pre>
-      <p>To display the icon in your UI, use the following markup and just replace the <code class="icon-class">fa-apex</code> with class for the icon you want to use.</p>
-      <pre>&lt;span class="fa <span class="icon-class">fa-apex</span>" aria-hidden="true"&gt;&lt;/span&gt;</pre>
-      <p>To display the larger size icons, add the <code class="modifier-class">fa-lg</code> modifier class. This will display the icon with the more detailed 32px version.</p>
-      <pre>&lt;span class="fa <span class="icon-class">fa-apex</span> <span class="modifier-class">fa-lg</span>" aria-hidden="true"&gt;&lt;/span&gt;</pre>
-      <p>You can also apply the <code class="modifier-class">force-fa-lg</code> modifier class to any container to force all icons within it to use the larger icons.</p>
-
-      <h2>Icon Library</h2>
-      <p>There are two families of icons within Font APEX &mdash; Small and Large.</p>
-      <ul>
-        <li><b>Small icons</b> are based on a 16x16 grid and ideally suited for buttons and menus.</li>
-        <li><b>Large icons</b> are based on a 32x32 grid and well suited for places where you need to provide a larger graphic, such as cards, media lists, and hero regions.</li>
+  <header role="banner" class="dm-Header">
+    <div class="dm-Container">
+      <a class="dm-Header-logoLink" href="../index.html">
+        <svg class="dm-Header-logoIcon" role="img" aria-label="Oracle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 24">
+          <title id="dm-Header-logoText">Oracle</title>
+          <path d="M24.6 0C30.9 0 36 5.4 36 12s-5.1 12-11.4 12H11.4C5.1 24 0 18.6 0 12S5.1 0 11.4 0h13.2zm-.3 4H11.7c-4.1 0-7.4 3.6-7.4 8s3.3 8 7.4 8h12.6c4.1 0 7.4-3.6 7.4-8s-3.3-8-7.4-8z" fill-rule="evenodd" clip-rule="evenodd"></path>
+        </svg>
+        <span class="dm-Header-logoLabel">
+          Font APEX
+        </span>
+        <span class="dm-Header-version">v2.5.1</span>
+      </a>
+      <ul class="dm-HeaderNav">
+        <li>
+          <a class="dm-HeaderNav-link" href="https://github.com/oracle/font-apex">
+            <svg class="dm-HeaderNav-icon" aria-hidden="true" viewBox="0 0 16 16">
+              <path d="M8 1.172a7.002 7.002 0 0 0-2.215 13.644c.355.065.483-.154.483-.336 0-.165-.009-.72-.009-1.304 0 0-1.951.419-2.361-.829 0 0-.32-.812-.775-1.022 0 0-.638-.437.046-.428 0 0 .693.054 1.076.72.611 1.075 1.632.765 2.032.583.064-.456.246-.756.446-.939-1.559-.173-3.19-.775-3.19-3.453 0-.767.273-1.395.72-1.878-.073-.183-.31-.894.064-1.86.593-.182 1.933.72 1.933.72a6.626 6.626 0 0 1 3.5 0s1.34-.902 1.923-.72c.383.966.145 1.677.072 1.86a2.69 2.69 0 0 1 .72 1.878c0 2.688-1.64 3.281-3.199 3.453.255.219.474.638.474 1.294v1.924c0 .182.119.401.474.336A7.002 7.002 0 0 0 8 1.172z" />
+            </svg>
+            <span class="dm-HeaderNav-label">View on GitHub</span>
+          </a>
+        </li>
+        <li>
+          <a class="dm-HeaderNav-link" href="about.html" aria-current="page">
+            <span class="dm-HeaderNav-icon fa fa-info-circle-o" aria-hidden="true"></span>
+            <span class="dm-HeaderNav-label">About</span>
+          </a>
+        </li>
       </ul>
-      <p>Many <a href="https://apex.oracle.com" target="_blank">Oracle APEX</a> components will automatically use the small or large icons based on the context (such as Template Options), so all you need to do is focus on the icon you want. For example, when using Cards, the Block and Featured template option will automatically show the larger versions of icons where the Basic and Compact template options will use icons from the smaller set.</p>
-      <p>There are over 1000 icons in Font APEX, and there are 25 modifiers you can place on top of any existing icons so you can customize any icon to fit your needs.</p>
-      <p>Font APEX is also well suited for bi-directional languages. Icons with arrows, such as <code class="icon-class">fa-arrow-right</code> will automatically flip horizontally when viewed in a Right-to-Left language such as Arabic or Farsi. You can prevent this default behavior by adding the <code class="modifier-class">fa-dir-strict</code> modifier class.</p>
-      <h2>License</h2>
-      <p>
-        Fonts: <a href="https://scripts.sil.org/OFL" target="_blank">SIL OFL 1.1 License</a><br />
-        Icons + Code: <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a>
-      </p>
-      <p>Please read the <a href="https://github.com/oracle/font-apex/blob/master/LICENSE.txt" target="_blank">LICENSE.txt</a> file on for additional details.</p>
+    </div>
+  </header>
+
+  <a id="main-content"></a>
+  <main class="dm-Body">
+    <div class="dm-Container">
+
+      <h1>Font APEX</h1>
+
+      <div class="dm-About">
+
+        <h2>Introduction</h2>
+        <p>Font APEX is an icon library initially designed for <a href="https://apex.oracle.com" target="_blank" rel="noopener">Oracle APEX</a> and <a href="https://apex.oracle.com/ut" target="_blank" rel="noopener">Universal Theme</a>. It was originally intended as a replacement for Font Awesome 4, the web's leading icon library, and therefore contains almost all of the Font Awesome icons, re-drawn originally on a 16x16 grid as line-icons. We wanted to make it a seamless switch to go from Font Awesome to Font APEX, and therefore use the same "fa" prefix for the icons, making it easier than ever to move to entirely new icon library.</p>
+        <h2>Getting Started</h2>
+        <p>Extract the release and keep <code>css/</code>, <code>fonts/</code>, and <code>images/flags/</code> together. Link the stylesheet in the head of your page. Both font families use WOFF2.</p>
+        <pre>&lt;link rel="stylesheet" href="css/font-apex.min.css?v=2.5.1" type="text/css" /&gt;</pre>
+        <p>To display the icon in your UI, use the following markup and just replace the <code class="icon-class">fa-apex</code> with class for the icon you want to use.</p>
+        <pre>&lt;span class="fa <span class="icon-class">fa-apex</span>" aria-hidden="true"&gt;&lt;/span&gt;</pre>
+        <p>To display the larger size icons, add the <code class="modifier-class">fa-lg</code> modifier class. This will display the icon with the more detailed 32px version.</p>
+        <pre>&lt;span class="fa <span class="icon-class">fa-apex</span> <span class="modifier-class">fa-lg</span>" aria-hidden="true"&gt;&lt;/span&gt;</pre>
+        <p>You can also apply the <code class="modifier-class">force-fa-lg</code> modifier class to any container to force all icons within it to use the larger icons.</p>
+
+        <h2>Modifiers and flags</h2>
+        <p>Add one of the 41 modifiers to a base icon. For example, <a href="icon.html#fam-check">fam-check</a> adds a check mark to the user icon:</p>
+        <pre>&lt;span class="fa fa-user fam-check" aria-hidden="true"&gt;&lt;/span&gt;</pre>
+        <p>The catalog includes 254 flag SVGs. Search by country, territory, or flag class. A flag uses the same SVG at either size. When it conveys information, include an accessible name:</p>
+        <pre>&lt;span class="fa fa-flag-ca" role="img" aria-label="Canada"&gt;&lt;/span&gt;</pre>
+        <h2>Icon change log</h2>
+        <p>These highlights summarize the icon additions documented for recent Font APEX releases. For class renames and visual changes when moving from 2.2, see <a href="#upgrading-from-2-2">Upgrading from 2.2</a>. Browse the <a href="../index.html">complete icon catalog</a> for the current set.</p>
+        <ul>
+          <li><strong>2.5.1</strong> &mdash; Updated the SVG artwork for the release. The current package includes 254 flag assets and 41 modifiers.</li>
+          <li><strong>2.5</strong> &mdash; Added 66 icons focused on construction, tools, and infrastructure, along with additional modifiers. <a href="https://blogs.oracle.com/apex/universal-theme-evolves-with-the-new-iris-theme-style-smarter-templates-and-modern-ux-capabilities" target="_blank" rel="noopener">Oracle APEX 26.1 release overview</a>.</li>
+          <li><strong>2.4</strong> &mdash; Added 244 country flag icons using the <code>fa-flag-##</code> class pattern. <a href="https://docs.oracle.com/en/database/oracle/apex/24.2/htmrn/new-features.html" target="_blank" rel="noopener">Oracle APEX 24.2 release notes</a>.</li>
+          <li><strong>2.3</strong> &mdash; Added 70 icons across AI, business, calendar, and web application categories, including the Badgerine icon. <a href="https://apex-stg.oracleapex.com/en/platform/features/whats-new-241/" target="_blank" rel="noopener">Oracle APEX 24.1 release overview</a>.</li>
+        </ul>
+        <h2 id="upgrading-from-2-2">Upgrading from 2.2</h2>
+        <p>Publish the release folders under a versioned path, such as <code>font-apex/2.5.1/</code>. This gives both WOFF2 files fresh URLs as well as the stylesheet.</p>
+        <p>Use these replacements for the five retired classes:</p>
+        <ul>
+          <li><code>fa-emoji-stuck-out-tounge</code> &rarr; <a href="icon.html#fa-emoji-stuck-out-tongue"><code>fa-emoji-stuck-out-tongue</code></a></li>
+          <li><code>fa-emoji-stuck-out-tounge-closed-eyes</code> &rarr; <a href="icon.html#fa-emoji-stuck-out-tongue-closed-eyes"><code>fa-emoji-stuck-out-tongue-closed-eyes</code></a></li>
+          <li><code>fa-emoji-stuck-out-tounge-wink</code> &rarr; <a href="icon.html#fa-emoji-stuck-out-tongue-wink"><code>fa-emoji-stuck-out-tongue-wink</code></a></li>
+          <li><code>fa-location-arrow-solid</code> &rarr; <a href="icon.html#fa-location-arrow"><code>fa-location-arrow</code></a></li>
+          <li><code>fa-location-circle-solid</code> &rarr; <a href="icon.html#fa-location-circle"><code>fa-location-circle</code></a></li>
+        </ul>
+        <p>To keep the 2.2 outline appearance of <code>fa-location-arrow</code>, <code>fa-location-circle</code>, and <code>fa-map-marker</code>, use <a href="icon.html#fa-location-arrow-o">fa-location-arrow-o</a>, <a href="icon.html#fa-location-circle-o">fa-location-circle-o</a>, and <a href="icon.html#fa-map-marker-o">fa-map-marker-o</a>, respectively.</p>
+        <h2>Icon Library</h2>
+        <p>There are two families of icons within Font APEX &mdash; Small and Large.</p>
+        <ul>
+          <li><b>Small icons</b> are based on a 16x16 grid and ideally suited for buttons and menus.</li>
+          <li><b>Large icons</b> are based on a 32x32 grid and well suited for places where you need to provide a larger graphic, such as cards, media lists, and hero regions.</li>
+        </ul>
+        <p>Many <a href="https://apex.oracle.com" target="_blank" rel="noopener">Oracle APEX</a> components will automatically use the small or large icons based on the context (such as Template Options), so all you need to do is focus on the icon you want. For example, when using Cards, the Block and Featured template option will automatically show the larger versions of icons where the Basic and Compact template options will use icons from the smaller set.</p>
+        <p>For right-to-left layouts, set <code>dir="rtl"</code> and add <code>class="u-RTL"</code> to a container. Supported directional icons, such as <code>fa-arrow-right</code>, then use their mirrored glyph. Add <code>fa-dir-strict</code> to an icon to preserve its direction.</p>
+        <h2>License</h2>
+        <p>
+          Fonts: <a href="https://scripts.sil.org/OFL" target="_blank" rel="noopener">SIL OFL 1.1 License</a><br />
+          Icons + Code: <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener">MIT License</a>
+        </p>
+        <p>Please read the <a href="../LICENSE.txt">LICENSE.txt</a> for additional details.</p>
+
+      </div>
 
     </div>
+  </main>
 
-  </div>
-</main>
-
-<footer role="contentinfo" class="dm-Footer">
-  <div class="dm-Container">
-    <p>&copy; Oracle</p>
-  </div>
-</footer>
+  <footer role="contentinfo" class="dm-Footer">
+    <div class="dm-Container">
+      <p>&copy; Oracle</p>
+    </div>
+  </footer>
 
 </body>
+
 </html>

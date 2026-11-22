@@ -1,494 +1,302 @@
-/* global fa */
+(function (catalog) {
+    'use strict';
 
-var fontapex = fontapex || {};
-
-//foreach for nodeList in IE
-NodeList.prototype.forEach = Array.prototype.forEach;
-
-fontapex.$ = function( selector ){
-    var Sel = function ( selector ) {
-        var selected = [];
-
-        if ( typeof selector === 'string' ) {
-            selected = document.querySelectorAll( selector );
-        } else {
-            selected.push( selector );
-        }
-
-        this.elements = selected;
-        this.length = this.elements.length;
-
-        return this;
+    const icons = new Map(Object.entries(catalog.iconIndex));
+    const lookup = new Map();
+    const flagSearchNames = new Map();
+    const countryAliases = {
+        gb: ['UK', 'United Kingdom of Great Britain and Northern Ireland', 'Great Britain', 'Britain'],
+        us: ['USA', 'United States of America', 'America']
     };
+    const sizePreference = 'large.fontapex';
+    let large = false;
 
-    Sel.prototype = {
-
-        addClass: function ( cl ) {
-                    // remove multiple spaces
-                    var str = cl.replace(/ +(?= )/g,''),
-                        classArray = str.split( ' ' );
-
-                    this.elements.forEach( function ( elem ) {
-                        classArray.forEach( function ( c ) {
-                            if ( c ) {
-                                elem.classList.add( c );
-                            }
-                        })
-
-                    });
-                    return this;
-        },
-
-        removeClass: function ( cl ) {
-
-                        var removeAllClasses = function ( el ) {
-                            el.className = '';
-                        };
-
-                        var removeOneClass = function ( el ) {
-                            el.classList.remove( cl );
-                        };
-
-                        var action = cl ? removeOneClass : removeAllClasses;
-
-                        this.elements.forEach( function ( elem ) {
-                            action( elem );
-                        });
-
-                        return this;
-        },
-
-        getClass: function () {
-                    return this.elements[0].classList.value;
-        },
-
-        on: function ( eventName, func ) {
-                this.elements.forEach( function( elem ){
-                    elem.addEventListener( eventName, func );
-                });
-
-                return this;
-        },
-
-        val: function () {
-                var val = '';
-                this.elements.forEach( function ( elem ) {
-                    switch ( elem.nodeName ) {
-                        case 'INPUT':
-                            if ( elem.checked ) {
-                                val = elem.value;
-                            }
-                            break;
-
-                        case 'SELECT':
-                            val = elem.options[ elem.selectedIndex ].value;
-                            break;
-                    }
-                });
-
-                return val;
-        },
-
-        text: function ( t ) {
-                if ( t ) {
-                    this.elements.forEach( function ( elem ) {
-                        elem.textContent = t;
-                    });
-                }
-
-                return this;
-        },
-
-        html: function ( h ) {
-                var html;
-
-                if ( typeof h === 'string') {
-                    this.elements.forEach( function ( elem ) {
-                        elem.innerHTML = h;
-                    });
-                    return this;
-                } else {
-                    this.elements.forEach( function ( elem ) {
-                        html = elem.innerHTML;
-                    });
-                    return html;
-                }
-        },
-
-        parent: function () {
-                    var p;
-                    this.elements.forEach( function ( elem ) {
-                        p = new Sel( elem.parentNode );
-                    });
-
-                    return p;
-        },
-
-        hide: function () {
-                this.elements.forEach( function ( elem ) {
-                    elem.style.display = 'none';
-                });
-
-                return this;
-        },
-
-        show: function ( t ) {
-                this.elements.forEach( function ( elem ) {
-                    elem.style.display = null;
-                });
-
-                return this;
+    for (const [code, country] of Object.entries(catalog.flags)) {
+        const className = 'fa-flag-' + code;
+        const alternateNames = countryAliases[code] || [];
+        icons.set(className, { categories: ['FLAGS'], country, alternateNames });
+        for (const term of [code, country, ...alternateNames]) {
+            const key = normalize(term);
+            if (!flagSearchNames.has(key)) flagSearchNames.set(key, className);
         }
-
-    };
-
-    return new Sel( selector );
-};
-
-(function( fa ){
-
-    var $ = fa.$,
-        L = 'LARGE',
-        S = 'SMALL',
-        CL_LARGE = 'force-fa-lg',
-        wLocation = window.location,
-        currentIcon = wLocation.hash.replace( '#', '' ) || 'fa-apex',
-        //isLarge = wLocation.search.indexOf( L ) > -1,
-        isLarge,
-        timeout,
-        apexIcons,
-        apexIconKeys,
-        flattened = [],
-        icons$ = $( '#icons' );
-
-    var _isLarge = function(value){
-        if(value){
-            try{
-                localStorage.setItem("large.fontapex",value);
-            }catch(e){
-                isLarge = value;
-            }
-        }else{
-            try{
-                return localStorage.getItem("large.fontapex") || "false";
-            }catch(e){
-                if (isLarge){
-                    return isLarge;
-                }else{
-                    isLarge = "false";
-                    return isLarge;
-                }
-            }
+    }
+    for (const [name, icon] of icons) {
+        lookup.set(name, name);
+        for (const alias of [...(icon.aliases || []), ...(icon.formerNames || [])]) {
+            lookup.set(alias, name);
         }
     }
 
-    var isPreviewPage = function () {
-      return $( '#icon_preview' ).length > 0 ;
-    };
-
-    var highlight = function (txt, str) {
-        return txt.replace(new RegExp("(" + str + ")","gi"), '<span class="highlight">$1</span>');
-    };
-
-    var renderIcons = function( opts ){
-        var output;
-
-        clearTimeout(timeout);
-        var debounce = opts.debounce || 50,
-            key = opts.filterString || '',
-            keyLength = key.length;
-
-        key = key.toUpperCase().trim();
-
-        var assembleHTML = function (resultSet, iconCategory) {
-            var size = _isLarge() === 'true' ? L : S,
-                getEntry = function ( cl ) {
-                    return '<li>' +
-                        '<a class="dm-Search-result" href="docs/icon.html'/*  + '?' + size */ + '#' + cl + '">' +
-                        '<div class="dm-Search-icon">' +
-                        '<span class="t-Icon fa '+ cl +'" aria-hidden="true"></span>' +
-                        '</div>' +
-                        '<div class="dm-Search-info">' +
-                        '<span class="dm-Search-class">'+ cl +'</span>' +
-                        '</div>' +
-                        '</a>' +
-                        '</li>';
-                };
-
-            if (iconCategory) { // keywords is not provided, show everything
-                output = output + '<div class="dm-Search-category">';
-                output = output + '<h2 class="dm-Search-title">' + iconCategory.replace(/_/g,' ').toLowerCase()+ ' Icons</h2>';
-                output = output + '<ul class="dm-Search-list">';
-                resultSet.forEach(function(iconClass){
-                    output = output + getEntry( iconClass.name );
-                });
-                output = output + '</ul>';
-                output = output + '</div>';
-            } else {
-                if (resultSet.length > 0) {
-                    resultSet.forEach(function (iconClass) {
-                        output = output + getEntry( iconClass.name );
-                    });
-                }
+    function syncSizeOnNavigation(updateView) {
+        function syncSize() {
+            try {
+                large = localStorage.getItem(sizePreference) === 'true';
+            } catch {
+                // Use the in-memory selection if storage is unavailable.
             }
-        };
+            document.getElementById(large ? 'icon_size_large' : 'icon_size_small').checked = true;
+            updateView();
+        }
+        syncSize();
+        window.addEventListener('pageshow', event => {
+            if (event.persisted) syncSize();
+        });
+    }
 
-        var search = function () {
-            if (key.length === 1) {
+    function saveSize(isLarge) {
+        large = isLarge;
+        try {
+            localStorage.setItem(sizePreference, String(isLarge));
+        } catch {
+            // The selection still applies to the current page.
+        }
+    }
+
+    function isModifier(name) {
+        return name.startsWith('fam-');
+    }
+
+    function bareName(name) {
+        return name.replace(/^fam?-/, '');
+    }
+
+    function normalize(text) {
+        return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .trim().toLowerCase().replace(/\./g, '').replace(/\s+/g, '-');
+    }
+
+    function element(tag, className, text) {
+        const node = document.createElement(tag);
+        node.className = className;
+        if (text) node.textContent = text;
+        return node;
+    }
+
+    function renderTiles(names) {
+        const tiles = document.createDocumentFragment();
+        for (const name of names) {
+            const item = document.createElement('li');
+            const link = element('a', 'dm-Search-result');
+            link.href = 'docs/icon.html#' + name;
+            const image = element('span', 'dm-Search-icon');
+            const glyph = element('span', 'fa ' + (isModifier(name) ? 'fa-user ' : '') + name);
+            glyph.setAttribute('aria-hidden', 'true');
+            image.append(glyph);
+            const info = element('span', 'dm-Search-info');
+            const country = icons.get(name).country;
+            if (country) info.append(country, document.createElement('br'));
+            info.append(element('span', 'dm-Search-class', name));
+            link.append(image, info);
+            item.append(link);
+            tiles.append(item);
+        }
+        return tiles;
+    }
+
+    function renderGroup(title, names) {
+        const group = element('div', 'dm-Search-category');
+        group.append(element('h2', 'dm-Search-title', title));
+        if (!names.length) return group;
+        const list = element('ul', 'dm-Search-list');
+        list.append(renderTiles(names));
+        group.append(list);
+        return group;
+    }
+
+    function initBrowser() {
+        const categories = new Map();
+        const entries = [];
+        for (const [className, icon] of icons) {
+            const labels = isModifier(className) ? ['MODIFIERS'] : icon.categories;
+            const name = normalize(bareName(className));
+            const tags = [icon.country || '', ...(icon.alternateNames || []), ...(icon.filters || '').split(','),
+                ...(icon.aliases || []).map(bareName), ...(icon.formerNames || []).map(bareName)];
+            entries.push({ className, name, words: name.split('-'), tags: tags.filter(Boolean).map(normalize) });
+            for (const label of labels || []) {
+                const category = label.toUpperCase();
+                if (!categories.has(category)) categories.set(category, new Set());
+                categories.get(category).add(className);
+            }
+        }
+        const groups = Array.from(categories.keys()).sort().map(category => {
+            const sources = new Set();
+            const names = Array.from(categories.get(category)).sort().filter(name => {
+                if (lookup.has(name) && lookup.get(name) !== name) return false;
+                const icon = icons.get(name);
+                const source = icon.sourceName || bareName(name);
+                if (sources.has(source)) return false;
+                sources.add(source);
+                return true;
+            });
+            return {
+                title: category === 'FLAGS' || category === 'MODIFIERS'
+                    ? category.toLowerCase() : category.replace(/_/g, ' ').toLowerCase() + ' icons',
+                names
+            };
+        });
+        const results = document.getElementById('icons');
+        const status = document.getElementById('search_status');
+        const search = document.getElementById('search');
+        let timer;
+
+        function render() {
+            clearTimeout(timer);
+            const query = normalize(search.value);
+            const key = bareName(query);
+            const exact = lookup.get(query) || lookup.get('fa-' + key) || flagSearchNames.get(query);
+            if (!key) {
+                results.replaceChildren(...groups.map(group => renderGroup(group.title, group.names)));
+                if (status.textContent) status.textContent = 'Showing all icon categories';
                 return;
             }
-
-            var resultSet = [],
-                resultsTitle = '';
-
-            output = '';
-
-            if (key === '') { // no keywords provided, display all icons.
-                apexIconKeys.forEach(function(iconCategory){
-                    resultSet = apexIcons[iconCategory].sort(function (a, b) {
-                        if (a.name < b.name) {
-                            return -1;
-                        } else if (a.name > b.name) {
-                            return 1;
-                        } else {
-                            return 0;
-                        }
-                    }); // no keywords, no search. Just sort.
-                    assembleHTML(resultSet, iconCategory);
-                });
-            } else {
-                resultSet = flattened.filter(function(curVal){
-                    var name     = curVal.name.toUpperCase().slice(3), // remove the prefix 'fa-'
-                        nameArr,
-                        filters  = curVal.filters ? curVal.filters.toUpperCase() : '',
-                        filtersArr,
-                        firstXletters,
-                        rank = 0,
-                        i, filterArrLen, j, nameArrLen;
-
-                    if (key.indexOf(' ') > 0) {
-                        key = key.replace(' ', '-');
-                    }
-
-                    if (name.indexOf(key) >= 0) {
-                        // convert names to array for ranking
-                        nameArr = name.split('-');
-                        nameArrLen = nameArr.length;
-                        // rank: doesn't have "-"
-                        if (name.indexOf('-') < 0) {
-                            rank += 1000;
-                        }
-                        // rank: matches the whole name
-                        if (name.length === keyLength) {
-                            rank += 1000;
-                        }
-                        // rank: matches partial beginning
-                        firstXletters = nameArr[0].slice(0, keyLength);
-                        if (firstXletters.indexOf(key) >= 0) {
-                            rank += 1000;
-                        }
-                        for (j = 0; j < nameArrLen; j++) {
-                            if (nameArr[j]) {
-                                if (nameArr[j].indexOf(key) >= 0) {
-                                    rank += 100;
-                                }
-                            }
-                        }
-                        curVal.rank = rank;
-                        return true;
-                    }
-
-                    // convert words in filters to array
-                    filtersArr = filters.split(',');
-                    filterArrLen = filtersArr.length;
-                    // keywords matches in filters field.
-                    for (i = 0; i < filterArrLen; i ++) {
-                        firstXletters = filtersArr[i].slice(0, keyLength);
-                        if (firstXletters.indexOf(key) >= 0) {
-                            curVal.rank = 1;
-                            return true;
-                        }
-                    }
-                });
-
-                resultSet.sort(function (a, b) {
-                    var ar = a.rank,
-                        br = b.rank;
-                    if (ar > br) {
-                        return -1;
-                    } else if (ar < br) {
-                        return 1;
-                    } else {
-                        return 0;
-                    }
-                });
-
-                assembleHTML(resultSet);
-
-                // search results UI doesn't require category title
-                resultsTitle = resultSet.length === 0 ? 'No results' : resultSet.length + ' Results';
-                output = '<div class="dm-Search-category">' +
-                    '<h2 class="dm-Search-title">' + resultsTitle + '</h2>' +
-                    '<ul class="dm-Search-list">' +
-                    output +
-                    '</ul>';
-                output = output + '</div>';
+            if (key.length === 1 && !exact) {
+                const prompt = 'Enter at least two characters to search';
+                results.replaceChildren(renderGroup(prompt, []));
+                status.textContent = prompt;
+                return;
             }
-
-            // finally add output
-            document.getElementById( 'icons' ).innerHTML = output;
-        };
-
-        timeout = setTimeout(function() {
-            search();
-        }, debounce);
-    };
-
-    var toggleSize = function ( that, affected ) {
-        that.checked = true;
-        if ( that.value === L ) {
-            affected.addClass( CL_LARGE );
-            //isLarge = true;
-            _isLarge('true');
-        } else {
-            affected.removeClass( CL_LARGE );
-            _isLarge('false');
+            timer = setTimeout(() => {
+                const matches = [];
+                for (const entry of entries) {
+                    let rank = 0;
+                    if (entry.className === exact) {
+                        rank = 10000;
+                    } else if (entry.name.includes(key)) {
+                        rank = 1 + 100 * entry.words.filter(word => word.includes(key)).length;
+                        if (entry.words.length === 1) rank += 1000;
+                        if (entry.name === key) rank += 1000;
+                        if (entry.words[0].startsWith(key)) rank += 1000;
+                    } else if (entry.tags.some(tag => tag.includes(key))) {
+                        rank = 1;
+                    }
+                    if (rank) matches.push({ name: entry.className, rank });
+                }
+                matches.sort((a, b) => b.rank - a.rank);
+                const title = matches.length ? matches.length + (matches.length === 1 ? ' result' : ' results') : 'No results';
+                results.replaceChildren(renderGroup(title, matches.map(match => match.name)));
+                status.textContent = title;
+            }, 250);
         }
-    };
-
-    var downlodSVGBtn = function () {
-        $( 'button.pv-Button' ).on( 'click', function () {
-            var size = _isLarge() === 'true' ? L.toLowerCase() : S.toLowerCase();
-            window.open( '../svgs/' + size + '/' + currentIcon.replace( 'fa-', '' ) + '.svg' );
-        });
-    };
-
-    var renderIconPreview = function() {
-        var iconPreview$        = $( '#icon_preview' ),
-            iconHTML,
-            iconSize            = $( '[name="icon_size"]' ).val(),
-            iconScale           = $( '[name="icon_scale"]' ).val(),
-            iconAnimation       = $( '[name="icon_animation"]' ).val(),
-            iconRotate          = $( '[name="icon_rotate"]' ).val(),
-            iconModifier        = $( '[name="icon_modifier"]' ).val(),
-            iconsModiferStatus$ = $( '[name="icon_modifier_status"]' ),
-            iconsMSParent$      = iconsModiferStatus$.parent(), // for hide/show depending on modifer status
-            iconModifierStatus  = iconsModiferStatus$.val();
-
-        if ( !iconModifier ) {
-            iconsMSParent$.hide();
-            iconModifierStatus = '';
-        } else {
-            iconsMSParent$.show();
-        }
-
-        var iconClasses         = 'fa' + ' ' + currentIcon + ' ' + iconSize + ' ' + iconScale + ' ' + iconAnimation + ' ' + iconRotate + ' ' + iconModifier + ' ' + iconModifierStatus,
-            iconClassesPreview  = 'fa' + ' ' + currentIcon + ' ' + iconScale + ' ' + iconAnimation + ' ' + iconRotate + ' ' + iconModifier + ' ' + iconModifierStatus;
-
-        $( '#icon_preview [data-icon]' )
-            .removeClass()
-            .addClass( iconClasses );
-
-        // Remove the icon size modifier as the previews already show
-        $( '.dm-Previews [data-icon]' )
-            .removeClass()
-            .addClass( iconClassesPreview );
-
-        iconHTML = iconPreview$.html().replace( ' data-icon=""', '' );
-
-        // todo output classes to the page UI display
-        $( '#icon_code' ).text( iconHTML );
-        $( '#icon_classes' ).text( iconClasses );
-
-        // output character code
-        var iconString = window.getComputedStyle(document.querySelector('#icon_preview [data-icon]'), ':before').getPropertyValue('content');
-        var iconChar = '\\' + iconString.charCodeAt(1).toString(16);
-        $( '#icon_char').text( iconChar );
-
-        _isLarge( iconSize === 'fa-lg');
-    };
-
-
-    // Init Page
-    /*if (localStorage.getItem("large.fontapex") === 'true'){
-        $( '#icon_size_large' ).checked = true;
-    } else {
-        $( '#icon_size_small' ).checked = true;
-    }*/
-
-
-    $( 'a.dm-Header-logoLink' ).on( 'click', function ( e ) {
-        var url = this.href,
-            size = _isLarge() === 'true' ?  L : S;
-        this.href = url;// + '?' + size;
-    });
-
-    if ( isPreviewPage() ) {
-        if ( _isLarge() === 'true' ){
-            document.getElementById( 'icon_size_large' ).checked = true;
-            icons$.addClass( CL_LARGE );
-        } else {
-            document.getElementById( 'icon_size_small' ).checked = true;
-            icons$.removeClass( CL_LARGE );
-        }
-
-        if ( currentIcon ) {
-            $( '.dm-Icon-name' )
-                .text( currentIcon );
-
-            $( '[data-icon]' )
-                .removeClass( 'fa-apex' )
-                .addClass( currentIcon );
-
-            renderIconPreview();
-            downlodSVGBtn();
-        }
-
-        // icon preview modifiers
-        $( 'input, select' )
-            .on( 'change', function () {
-                renderIconPreview();
+        search.closest('.dm-SearchBox').hidden = false;
+        search.addEventListener('input', render);
+        syncSizeOnNavigation(() => results.classList.toggle('force-fa-lg', large));
+        for (const radio of document.querySelectorAll('[name="icon_size"]')) {
+            radio.addEventListener('change', () => {
+                saveSize(radio.value === 'LARGE');
+                results.classList.toggle('force-fa-lg', large);
             });
-
-    } else {
-        // Index Page
-        if ( _isLarge() === 'true' ){
-            document.getElementById( 'icon_size_large' ).checked = true;
-            icons$.addClass( CL_LARGE );
-        } else {
-            document.getElementById( 'icon_size_small' ).checked = true;
-            icons$.removeClass( CL_LARGE );
         }
-
-        if ( fa.icons ) {
-            renderIcons({});
-
-            flattened = function () {
-                var set = [];
-
-                apexIcons    = fa.icons;
-                apexIconKeys = Object.keys( apexIcons );
-
-                apexIconKeys.forEach(function(iconCategory) {
-                    set = set.concat( apexIcons[iconCategory] );
-                });
-
-                return set;
-            }();
-
-            $( '#search' ).on( 'keyup', function ( e ) {
-                renderIcons({
-                    debounce: 250,
-                    filterString: e.target.value
-                });
-            } );
-
-            // Size Toggle
-            $( '[name="icon_size"]' ).on( 'click', function ( e ) {
-                var affectedElem =  icons$.length > 0 ? icons$ : $( '.dm-IconPreview' );
-                toggleSize( this, affectedElem );
-            } );
-        }
+        render();
     }
 
-})( fontapex );
+    function initDetail() {
+        const controls = document.querySelector('.dm-IconBuilder');
+        const modifier = document.getElementById('icon_modifier');
+        const status = document.getElementById('icon_modifier_status');
+        const rotation = document.getElementById('icon_rotate');
+        const download = document.getElementById('icon_download');
+        const unicode = document.getElementById('icon_char');
+        const code = document.getElementById('icon_code');
+        const copyButtons = document.querySelectorAll('.dm-CopyButton');
+        const preview = document.querySelector('#icon_preview [data-icon]');
+        let current;
+        const modifiers = Array.from(icons.keys()).filter(isModifier);
+        const order = new Intl.Collator('en', { numeric: true });
+        for (const name of modifiers.sort(order.compare)) {
+            const label = bareName(name).replace(/-/g, ' ').replace(/\b[a-z]/g, letter => letter.toUpperCase());
+            modifier.add(new Option(label, name));
+        }
+
+        function renderPreview() {
+            if (!current) return;
+            const icon = icons.get(current);
+            const overlay = isModifier(current);
+            const selectedModifier = overlay ? current : modifier.value;
+            modifier.closest('.dm-Field').hidden = overlay;
+            status.closest('.dm-Field').hidden = !selectedModifier;
+            rotation.closest('.dm-Field').hidden = Boolean(icon.country);
+            const base = overlay ? 'fa-user' : current;
+            const options = [
+                controls.querySelector('[name="icon_scale"]:checked').value,
+                document.getElementById('icon_animation').value,
+                icon.country ? '' : rotation.value,
+                selectedModifier,
+                selectedModifier ? status.value : ''
+            ].filter(Boolean);
+            const classes = ['fa', base, large ? 'fa-lg' : '', ...options].filter(Boolean).join(' ');
+            preview.className = classes;
+            for (const example of document.querySelectorAll('.dm-Previews [data-icon]')) {
+                example.className = ['fa', base, ...options].join(' ');
+            }
+            const snippet = preview.cloneNode(false);
+            snippet.removeAttribute('data-icon');
+            if (icon.country) {
+                snippet.removeAttribute('aria-hidden');
+                snippet.setAttribute('role', 'img');
+                snippet.setAttribute('aria-label', icon.country);
+            }
+            document.getElementById('flag_markup_note').hidden = !icon.country;
+            code.textContent = snippet.outerHTML;
+            document.querySelectorAll('.dm-CopyStatus').forEach(status => status.textContent = '');
+            document.getElementById('icon_classes').textContent = classes;
+
+            const content = icon.country ? '' : getComputedStyle(preview, overlay ? '::after' : '::before').content;
+            const glyph = /^"(.)"$/u.exec(content);
+            unicode.parentElement.hidden = !glyph;
+            unicode.textContent = glyph ? '\\' + glyph[1].codePointAt(0).toString(16) : '';
+            const filename = (icon.sourceName || bareName(current)) + '.svg';
+            download.href = icon.country ? '../images/flags/' + filename
+                : '../svgs/' + (large ? 'large/' : 'small/') + filename;
+        }
+
+        function showIcon() {
+            current = lookup.get(location.hash.slice(1) || 'fa-apex');
+            document.getElementById('icon_details').hidden = !current;
+            document.getElementById('icon_not_found').hidden = Boolean(current);
+            document.title = (current || 'Icon not found') + ' | Oracle Font APEX';
+            if (!current) {
+                download.removeAttribute('href');
+                return;
+            }
+            const country = icons.get(current).country;
+            document.querySelector('.dm-Icon-name').textContent = country ? country + ' (' + current + ')' : current;
+            renderPreview();
+        }
+
+        copyButtons.forEach(button => button.addEventListener('click', async () => {
+            const output = document.getElementById(button.dataset.copy);
+            const status = document.getElementById('copy_status_' + button.dataset.copy.replace('icon_', ''));
+            const value = output.textContent;
+            if (navigator.clipboard?.writeText) {
+                try {
+                    await navigator.clipboard.writeText(value);
+                    if (current && output.textContent === value) status.textContent = 'Copied.';
+                    return;
+                } catch {
+                    // Offer manual copying when the browser denies clipboard access.
+                }
+            }
+            if (!current || output.textContent !== value) return;
+            output.focus();
+            const range = document.createRange();
+            range.selectNodeContents(output);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            status.textContent = 'Value selected. Use your device’s Copy command.';
+        }));
+
+        controls.addEventListener('change', event => {
+            if (event.target.name === 'icon_size') saveSize(event.target.value === 'fa-lg');
+            renderPreview();
+        });
+        window.addEventListener('hashchange', showIcon);
+        syncSizeOnNavigation(showIcon);
+    }
+
+    if (document.getElementById('icon_preview')) {
+        initDetail();
+    } else {
+        initBrowser();
+    }
+})(fontapex);

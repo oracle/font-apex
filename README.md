@@ -3,12 +3,12 @@
 ## [Browse Font APEX Icons](https://oracle.github.io/font-apex/)
 
 ## Introduction
-Font APEX is an icon library initially designed [Oracle APEX](https://apex.oracle.com) and [Universal Theme](https://apex.oracle.com/ut). It was originally intended as a replacement for Font Awesome 4, the web's leading icon library, and therefore contains almost all of the Font Awesome icons, re-drawn originally on a 16x16 grid as line-icons. We wanted to make it a seamless switch to go from Font Awesome to Font APEX, and therefore use the same "fa" prefix for the icons, making it easier than ever to move to entirely new icon library.
+Font APEX is an icon library initially designed for [Oracle APEX](https://apex.oracle.com) and [Universal Theme](https://apex.oracle.com/ut). It was originally intended as a replacement for Font Awesome 4, the web's leading icon library, and therefore contains almost all of the Font Awesome icons, re-drawn originally on a 16x16 grid as line-icons. We wanted to make it a seamless switch to go from Font Awesome to Font APEX, and therefore use the same "fa" prefix for the icons, making it easier than ever to move to entirely new icon library.
 
 ## Getting Started
-Download and extract Font APEX, and then simply include a link to the Font APEX css file in your HTML header.
+Extract the release and keep `css/`, `fonts/`, and `images/flags/` together. Link the stylesheet in the head of your page. Both font families use WOFF2.
 ```
-<link rel="stylesheet" href="css/font-apex.min.css?v=2.2" type="text/css" />
+<link rel="stylesheet" href="css/font-apex.min.css?v=2.5.1" type="text/css" />
 ```
 
 To display the icon in your UI, use the following markup and just replace the `fa-apex` with class for the icon you want to use.
@@ -23,6 +23,37 @@ To display the larger size icons, add the `fa-lg` modifier class. This will disp
 
 You can also apply the `force-fa-lg` modifier class to any container to force all icons within it to use the larger icons.
 
+## Modifiers and flags
+
+Add a modifier to a base icon, or use a flag class to display a country or territory. The icon browser includes all 41 modifiers and 254 flags. The flag example below announces the country name. When nearby text already names the country, use `aria-hidden="true"` in place of `role` and `aria-label`.
+
+```html
+<span class="fa fa-user fam-check" aria-hidden="true"></span>
+<span class="fa fa-flag-ca" role="img" aria-label="Canada"></span>
+```
+
+## Upgrading from 2.2 to 2.5.1
+
+Publish the release folders under a versioned path, such as `font-apex/2.5.1/`. Linking to that copy gives both WOFF2 files fresh URLs as well as the stylesheet.
+
+Replace these five retired classes in your markup. The icon browser accepts their old names and shows the current class.
+
+| 2.2 class | 2.5.1 class |
+|---|---|
+| `fa-emoji-stuck-out-tounge` | `fa-emoji-stuck-out-tongue` |
+| `fa-emoji-stuck-out-tounge-closed-eyes` | `fa-emoji-stuck-out-tongue-closed-eyes` |
+| `fa-emoji-stuck-out-tounge-wink` | `fa-emoji-stuck-out-tongue-wink` |
+| `fa-location-arrow-solid` | `fa-location-arrow` |
+| `fa-location-circle-solid` | `fa-location-circle` |
+
+Three existing classes now select the solid glyph. To keep their 2.2 outline appearance, use the following classes.
+
+| 2.2 class | 2.5.1 class |
+|---|---|
+| `fa-location-arrow` | `fa-location-arrow-o` |
+| `fa-location-circle` | `fa-location-circle-o` |
+| `fa-map-marker` | `fa-map-marker-o` |
+
 ## Icon Library
 There are two families of icons within Font APEX - Small and Large.
 
@@ -31,9 +62,7 @@ There are two families of icons within Font APEX - Small and Large.
 
 Many [Oracle APEX](https://apex.oracle.com/) components will automatically use the small or large icons based on the context (such as Template Options), so all you need to do is focus on the icon you want. For example, when using Cards, the Block and Featured template option will automatically show the larger versions of icons where the Basic and Compact template options will use icons from the smaller set.
 
-There are over 1000 icons in Font APEX, and there are 25 modifiers you can place on top of any existing icons so you can customize any icon to fit your needs.
-
-Font APEX is also well suited for bi-directional languages. Icons with arrows, such as fa-arrow-right will automatically flip horizontally when viewed in a Right-to-Left language such as Arabic or Farsi. You can prevent this default behavior by adding the fa-dir-strict modifier class.
+For right-to-left layouts, set `dir="rtl"` and add `class="u-RTL"` to a container. Supported directional icons such as `fa-arrow-right` then use their mirrored glyph. Add `fa-dir-strict` to an icon to preserve its direction.
 
 You can see all of the Font APEX icons on the [Oracle APEX - Universal Theme Sample Application](https://apex.oracle.com/fontapex).
 
