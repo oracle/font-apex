@@ -1,434 +1,302 @@
-/* global fa */
+(function (catalog) {
+    'use strict';
 
-var fontapex = fontapex || {};
-
-//foreach for nodeList in IE
-NodeList.prototype.forEach = Array.prototype.forEach;
-
-fontapex.$ = function( selector ){
-    var Sel = function ( selector ) {
-        var selected = [];
-
-        if ( typeof selector === 'string' ) {
-            selected = document.querySelectorAll( selector );
-        } else {
-            selected.push( selector );
-        }
-
-        this.elements = selected;
-        this.length = this.elements.length;
-
-        return this;
+    const icons = new Map(Object.entries(catalog.iconIndex));
+    const lookup = new Map();
+    const flagSearchNames = new Map();
+    const countryAliases = {
+        gb: ['UK', 'United Kingdom of Great Britain and Northern Ireland', 'Great Britain', 'Britain'],
+        us: ['USA', 'United States of America', 'America']
     };
+    const sizePreference = 'large.fontapex';
+    let large = false;
 
-    Sel.prototype = {
-
-        addClass: function ( cl ) {
-                    // remove multiple spaces
-                    var str = cl.replace(/ +(?= )/g,''),
-                        classArray = str.split( ' ' );
-
-                    this.elements.forEach( function ( elem ) {
-                        classArray.forEach( function ( c ) {
-                            if ( c ) {
-                                elem.classList.add( c );
-                            }
-                        })
-
-                    });
-                    return this;
-        },
-
-        removeClass: function ( cl ) {
-
-                        var removeAllClasses = function ( el ) {
-                            el.className = '';
-                        };
-
-                        var removeOneClass = function ( el ) {
-                            el.classList.remove( cl );
-                        };
-
-                        var action = cl ? removeOneClass : removeAllClasses;
-
-                        this.elements.forEach( function ( elem ) {
-                            action( elem );
-                        });
-
-                        return this;
-        },
-
-        getClass: function () {
-                    return this.elements[0].classList.value;
-        },
-
-        on: function ( eventName, func ) {
-                this.elements.forEach( function( elem ){
-                    elem.addEventListener( eventName, func );
-                });
-
-                return this;
-        },
-
-        val: function () {
-                var val = '';
-                this.elements.forEach( function ( elem ) {
-                    switch ( elem.nodeName ) {
-                        case 'INPUT':
-                            if ( elem.checked ) {
-                                val = elem.value;
-                            }
-                            break;
-
-                        case 'SELECT':
-                            val = elem.options[ elem.selectedIndex ].value;
-                            break;
-                    }
-                });
-
-                return val;
-        },
-
-        text: function ( t ) {
-                if ( t ) {
-                    this.elements.forEach( function ( elem ) {
-                        elem.textContent = t;
-                    });
-                }
-
-                return this;
-        },
-
-        html: function ( h ) {
-                var html;
-
-                if ( typeof h === 'string') {
-                    this.elements.forEach( function ( elem ) {
-                        elem.innerHTML = h;
-                    });
-                    return this;
-                } else {
-                    this.elements.forEach( function ( elem ) {
-                        html = elem.innerHTML;
-                    });
-                    return html;
-                }
-        },
-
-        parent: function () {
-                    var p;
-                    this.elements.forEach( function ( elem ) {
-                        p = new Sel( elem.parentNode );
-                    });
-
-                    return p;
-        },
-
-        hide: function () {
-                this.elements.forEach( function ( elem ) {
-                    elem.style.display = 'none';
-                });
-
-                return this;
-        },
-
-        show: function ( t ) {
-                this.elements.forEach( function ( elem ) {
-                    elem.style.display = null;
-                });
-
-                return this;
+    for (const [code, country] of Object.entries(catalog.flags || {})) {
+        const className = 'fa-flag-' + code;
+        const alternateNames = countryAliases[code] || [];
+        icons.set(className, { categories: ['FLAGS'], country, alternateNames });
+        for (const term of [code, country, ...alternateNames]) {
+            const key = normalize(term);
+            if (!flagSearchNames.has(key)) flagSearchNames.set(key, className);
         }
-
-    };
-
-    return new Sel( selector );
-};
-
-(function( fa ){
-
-    var $ = fa.$,
-        L = 'LARGE',
-        S = 'SMALL',
-        CL_LARGE = 'force-fa-lg',
-        requestedIcon = window.location.hash.slice( 1 ),
-        iconIndex = fa.iconIndex || {},
-        currentIcon = Object.prototype.hasOwnProperty.call( iconIndex, requestedIcon )
-            ? requestedIcon
-            : 'fa-apex',
-        isLarge,
-        timeout,
-        browseCategories = new Map(),
-        searchIndex = new Map(),
-        icons$ = $( '#icons' );
-
-    var _isLarge = function(value){
-        if(value){
-            try{
-                localStorage.setItem("large.fontapex",value);
-            }catch(e){
-                isLarge = value;
-            }
-        }else{
-            try{
-                return localStorage.getItem("large.fontapex") || "false";
-            }catch(e){
-                if (isLarge){
-                    return isLarge;
-                }else{
-                    isLarge = "false";
-                    return isLarge;
-                }
-            }
+    }
+    for (const [name, icon] of icons) {
+        lookup.set(name, name);
+        for (const alias of [...(icon.aliases || []), ...(icon.formerNames || [])]) {
+            lookup.set(alias, name);
         }
     }
 
-    var isPreviewPage = function () {
-      return $( '#icon_preview' ).length > 0 ;
-    };
+    function syncSizeOnNavigation(updateView) {
+        function syncSize() {
+            try {
+                large = localStorage.getItem(sizePreference) === 'true';
+            } catch {
+                // Use the in-memory selection if storage is unavailable.
+            }
+            document.getElementById(large ? 'icon_size_large' : 'icon_size_small').checked = true;
+            updateView();
+        }
+        syncSize();
+        window.addEventListener('pageshow', event => {
+            if (event.persisted) syncSize();
+        });
+    }
 
-    var normalizeSearch = function ( value ) {
-        return value.trim().toLowerCase().replace(/\s+/g, '-');
-    };
+    function saveSize(isLarge) {
+        large = isLarge;
+        try {
+            localStorage.setItem(sizePreference, String(isLarge));
+        } catch {
+            // The selection still applies to the current page.
+        }
+    }
 
-    var buildSearchIndex = function ( catalog ) {
-        var categories = new Map();
+    function isModifier(name) {
+        return name.startsWith('fam-');
+    }
 
-        Object.keys( catalog ).forEach(function ( className ) {
-            var icon = catalog[className],
-                labels = icon.categories || [];
+    function bareName(name) {
+        return name.replace(/^fam?-/, '');
+    }
 
-            if ( !labels.length ) {
+    function normalize(text) {
+        return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .trim().toLowerCase().replace(/\./g, '').replace(/\s+/g, '-');
+    }
+
+    function element(tag, className, text) {
+        const node = document.createElement(tag);
+        node.className = className;
+        if (text) node.textContent = text;
+        return node;
+    }
+
+    function renderTiles(names) {
+        const tiles = document.createDocumentFragment();
+        for (const name of names) {
+            const item = document.createElement('li');
+            const link = element('a', 'dm-Search-result');
+            link.href = 'docs/icon.html#' + name;
+            const image = element('span', 'dm-Search-icon');
+            const glyph = element('span', 'fa ' + (isModifier(name) ? 'fa-user ' : '') + name);
+            glyph.setAttribute('aria-hidden', 'true');
+            image.append(glyph);
+            const info = element('span', 'dm-Search-info');
+            const country = icons.get(name).country;
+            if (country) info.append(country, document.createElement('br'));
+            info.append(element('span', 'dm-Search-class', name));
+            link.append(image, info);
+            item.append(link);
+            tiles.append(item);
+        }
+        return tiles;
+    }
+
+    function renderGroup(title, names) {
+        const group = element('div', 'dm-Search-category');
+        group.append(element('h2', 'dm-Search-title', title));
+        if (!names.length) return group;
+        const list = element('ul', 'dm-Search-list');
+        list.append(renderTiles(names));
+        group.append(list);
+        return group;
+    }
+
+    function initBrowser() {
+        const categories = new Map();
+        const entries = [];
+        for (const [className, icon] of icons) {
+            const labels = isModifier(className) ? ['MODIFIERS'] : icon.categories;
+            const name = normalize(bareName(className));
+            const tags = [icon.country || '', ...(icon.alternateNames || []), ...(icon.filters || '').split(','),
+                ...(icon.aliases || []).map(bareName), ...(icon.formerNames || []).map(bareName)];
+            entries.push({ className, name, words: name.split('-'), tags: tags.filter(Boolean).map(normalize) });
+            for (const label of labels || []) {
+                const category = label.toUpperCase();
+                if (!categories.has(category)) categories.set(category, new Set());
+                categories.get(category).add(className);
+            }
+        }
+        const groups = Array.from(categories.keys()).sort().map(category => {
+            const sources = new Set();
+            const names = Array.from(categories.get(category)).sort().filter(name => {
+                if (lookup.has(name) && lookup.get(name) !== name) return false;
+                const icon = icons.get(name);
+                const source = icon.sourceName || bareName(name);
+                if (sources.has(source)) return false;
+                sources.add(source);
+                return true;
+            });
+            return {
+                title: category === 'FLAGS' || category === 'MODIFIERS'
+                    ? category.toLowerCase() : category.replace(/_/g, ' ').toLowerCase() + ' icons',
+                names
+            };
+        });
+        const results = document.getElementById('icons');
+        const status = document.getElementById('search_status');
+        const search = document.getElementById('search');
+        let timer;
+
+        function render() {
+            clearTimeout(timer);
+            const query = normalize(search.value);
+            const key = bareName(query);
+            const exact = lookup.get(query) || lookup.get('fa-' + key) || flagSearchNames.get(query);
+            if (!key) {
+                results.replaceChildren(...groups.map(group => renderGroup(group.title, group.names)));
+                if (status.textContent) status.textContent = 'Showing all icon categories';
                 return;
             }
-
-            var name = normalizeSearch( className.slice( 3 ) );
-            searchIndex.set( className, {
-                className: className,
-                name: name,
-                words: name.split( '-' ),
-                tags: ( icon.filters || '' ).split( ',' ).map( normalizeSearch ).filter( Boolean )
-            });
-
-            labels.forEach(function ( category ) {
-                var label = category.toUpperCase();
-
-                if ( !categories.has( label ) ) {
-                    categories.set( label, new Set() );
-                }
-                categories.get( label ).add( className );
-            });
-        });
-
-        Array.from( categories.keys() ).sort().forEach(function ( label ) {
-            browseCategories.set( label, Array.from( categories.get( label ) ).sort() );
-        });
-    };
-
-    var renderIconGroup = function ( title, names ) {
-        var entries = names.map(function ( name ) {
-            return '<li><a class="dm-Search-result" href="docs/icon.html#' + name + '">' +
-                '<div class="dm-Search-icon"><span class="t-Icon fa ' + name + '" aria-hidden="true"></span></div>' +
-                '<div class="dm-Search-info"><span class="dm-Search-class">' + name + '</span></div>' +
-                '</a></li>';
-        }).join( '' );
-
-        return '<div class="dm-Search-category"><h2 class="dm-Search-title">' + title + '</h2>' +
-            ( entries ? '<ul class="dm-Search-list">' + entries + '</ul>' : '' ) + '</div>';
-    };
-
-    var renderIcons = function ( query ) {
-        var key = normalizeSearch( query ),
-            results = document.getElementById( 'icons' );
-
-        clearTimeout( timeout );
-
-        if ( !key ) {
-            var groups = [];
-            browseCategories.forEach(function ( names, category ) {
-                groups.push( renderIconGroup( category.replace(/_/g, ' ').toLowerCase() + ' Icons', names ) );
-            });
-            results.innerHTML = groups.join( '' );
-            return;
-        }
-
-        if ( key.length === 1 ) {
-            results.innerHTML = renderIconGroup( 'Enter at least two characters to search', [] );
-            return;
-        }
-
-        timeout = setTimeout(function () {
-            var matches = [];
-
-            searchIndex.forEach(function ( icon ) {
-                var rank = 0;
-
-                if ( icon.name.includes( key ) ) {
-                    if ( icon.words.length === 1 ) {
-                        rank += 1000;
+            if (key.length === 1 && !exact) {
+                const prompt = 'Enter at least two characters to search';
+                results.replaceChildren(renderGroup(prompt, []));
+                status.textContent = prompt;
+                return;
+            }
+            timer = setTimeout(() => {
+                const matches = [];
+                for (const entry of entries) {
+                    let rank = 0;
+                    if (entry.className === exact) {
+                        rank = 10000;
+                    } else if (entry.name.includes(key)) {
+                        rank = 1 + 100 * entry.words.filter(word => word.includes(key)).length;
+                        if (entry.words.length === 1) rank += 1000;
+                        if (entry.name === key) rank += 1000;
+                        if (entry.words[0].startsWith(key)) rank += 1000;
+                    } else if (entry.tags.some(tag => tag.includes(key))) {
+                        rank = 1;
                     }
-                    if ( icon.name === key ) {
-                        rank += 1000;
-                    }
-                    if ( icon.words[0].startsWith( key ) ) {
-                        rank += 1000;
-                    }
-                    rank += 100 * icon.words.filter(function ( word ) {
-                        return word.includes( key );
-                    }).length;
-                } else if ( icon.tags.some(function ( tag ) {
-                    return tag.startsWith( key );
-                }) ) {
-                    rank = 1;
+                    if (rank) matches.push({ name: entry.className, rank });
                 }
-
-                if ( rank ) {
-                    matches.push({ name: icon.className, rank: rank });
-                }
+                matches.sort((a, b) => b.rank - a.rank);
+                const title = matches.length ? matches.length + (matches.length === 1 ? ' result' : ' results') : 'No results';
+                results.replaceChildren(renderGroup(title, matches.map(match => match.name)));
+                status.textContent = title;
+            }, 250);
+        }
+        search.closest('.dm-SearchBox').hidden = false;
+        search.addEventListener('input', render);
+        syncSizeOnNavigation(() => results.classList.toggle('force-fa-lg', large));
+        for (const radio of document.querySelectorAll('[name="icon_size"]')) {
+            radio.addEventListener('change', () => {
+                saveSize(radio.value === 'LARGE');
+                results.classList.toggle('force-fa-lg', large);
             });
-
-            matches.sort(function ( a, b ) {
-                return b.rank - a.rank;
-            });
-            var names = matches.map(function ( match ) {
-                return match.name;
-            });
-            var title = names.length ? names.length + ( names.length === 1 ? ' result' : ' results' ) : 'No results';
-            results.innerHTML = renderIconGroup( title, names );
-        }, 250 );
-    };
-
-    var toggleSize = function ( that, affected ) {
-        that.checked = true;
-        if ( that.value === L ) {
-            affected.addClass( CL_LARGE );
-            //isLarge = true;
-            _isLarge('true');
-        } else {
-            affected.removeClass( CL_LARGE );
-            _isLarge('false');
         }
-    };
-
-    var renderIconPreview = function() {
-        var iconPreview$        = $( '#icon_preview' ),
-            iconHTML,
-            iconSize            = $( '[name="icon_size"]' ).val(),
-            iconScale           = $( '[name="icon_scale"]' ).val(),
-            iconAnimation       = $( '[name="icon_animation"]' ).val(),
-            iconRotate          = $( '[name="icon_rotate"]' ).val(),
-            iconModifier        = $( '[name="icon_modifier"]' ).val(),
-            iconsModiferStatus$ = $( '[name="icon_modifier_status"]' ),
-            iconsMSParent$      = iconsModiferStatus$.parent(), // for hide/show depending on modifer status
-            iconModifierStatus  = iconsModiferStatus$.val();
-
-        if ( !iconModifier ) {
-            iconsMSParent$.hide();
-            iconModifierStatus = '';
-        } else {
-            iconsMSParent$.show();
-        }
-
-        var iconClasses         = 'fa' + ' ' + currentIcon + ' ' + iconSize + ' ' + iconScale + ' ' + iconAnimation + ' ' + iconRotate + ' ' + iconModifier + ' ' + iconModifierStatus,
-            iconClassesPreview  = 'fa' + ' ' + currentIcon + ' ' + iconScale + ' ' + iconAnimation + ' ' + iconRotate + ' ' + iconModifier + ' ' + iconModifierStatus;
-
-        $( '#icon_preview [data-icon]' )
-            .removeClass()
-            .addClass( iconClasses );
-
-        // Remove the icon size modifier as the previews already show
-        $( '.dm-Previews [data-icon]' )
-            .removeClass()
-            .addClass( iconClassesPreview );
-
-        iconHTML = iconPreview$.html().replace( ' data-icon=""', '' );
-
-        // todo output classes to the page UI display
-        $( '#icon_code' ).text( iconHTML );
-        $( '#icon_classes' ).text( iconClasses );
-
-        // output character code
-        var iconString = window.getComputedStyle(document.querySelector('#icon_preview [data-icon]'), ':before').getPropertyValue('content');
-        var iconChar = '\\' + iconString.charCodeAt(1).toString(16);
-        $( '#icon_char').text( iconChar );
-
-        var size = iconSize === 'fa-lg' ? 'large' : 'small',
-            downloadLink = document.getElementById( 'icon_download' ),
-            source = iconIndex[currentIcon];
-
-        if ( source ) {
-            downloadLink.href = '../svgs/' + size + '/' + ( source.sourceName || currentIcon.replace( /^(fa|fam)-/, '' ) ) + '.svg';
-        }
-
-        _isLarge( iconSize === 'fa-lg' );
-    };
-
-
-    // Init Page
-    /*if (localStorage.getItem("large.fontapex") === 'true'){
-        $( '#icon_size_large' ).checked = true;
-    } else {
-        $( '#icon_size_small' ).checked = true;
-    }*/
-
-
-    $( 'a.dm-Header-logoLink' ).on( 'click', function ( e ) {
-        var url = this.href,
-            size = _isLarge() === 'true' ?  L : S;
-        this.href = url;// + '?' + size;
-    });
-
-    if ( isPreviewPage() ) {
-        if ( _isLarge() === 'true' ){
-            document.getElementById( 'icon_size_large' ).checked = true;
-            icons$.addClass( CL_LARGE );
-        } else {
-            document.getElementById( 'icon_size_small' ).checked = true;
-            icons$.removeClass( CL_LARGE );
-        }
-
-        if ( currentIcon ) {
-            $( '.dm-Icon-name' )
-                .text( currentIcon );
-
-            $( '[data-icon]' )
-                .removeClass( 'fa-apex' )
-                .addClass( currentIcon );
-
-            renderIconPreview();
-        }
-
-        // icon preview modifiers
-        $( 'input, select' )
-            .on( 'change', function () {
-                renderIconPreview();
-            });
-
-    } else {
-        // Index Page
-        if ( _isLarge() === 'true' ){
-            document.getElementById( 'icon_size_large' ).checked = true;
-            icons$.addClass( CL_LARGE );
-        } else {
-            document.getElementById( 'icon_size_small' ).checked = true;
-            icons$.removeClass( CL_LARGE );
-        }
-
-        if ( fa.iconIndex ) {
-            buildSearchIndex( iconIndex );
-
-            var searchInput = document.getElementById( 'search' );
-            renderIcons( searchInput.value );
-            searchInput.addEventListener( 'input', function () {
-                renderIcons( searchInput.value );
-            });
-
-            // Size Toggle
-            $( '[name="icon_size"]' ).on( 'click', function ( e ) {
-                var affectedElem =  icons$.length > 0 ? icons$ : $( '.dm-IconPreview' );
-                toggleSize( this, affectedElem );
-            } );
-        }
+        render();
     }
 
-})( fontapex );
+    function initDetail() {
+        const controls = document.querySelector('.dm-IconBuilder');
+        const modifier = document.getElementById('icon_modifier');
+        const status = document.getElementById('icon_modifier_status');
+        const rotation = document.getElementById('icon_rotate');
+        const download = document.getElementById('icon_download');
+        const unicode = document.getElementById('icon_char');
+        const code = document.getElementById('icon_code');
+        const copyButtons = document.querySelectorAll('.dm-CopyButton');
+        const preview = document.querySelector('#icon_preview [data-icon]');
+        let current;
+        const modifiers = Array.from(icons.keys()).filter(isModifier);
+        const order = new Intl.Collator('en', { numeric: true });
+        for (const name of modifiers.sort(order.compare)) {
+            const label = bareName(name).replace(/-/g, ' ').replace(/\b[a-z]/g, letter => letter.toUpperCase());
+            modifier.add(new Option(label, name));
+        }
+
+        function renderPreview() {
+            if (!current) return;
+            const icon = icons.get(current);
+            const overlay = isModifier(current);
+            const selectedModifier = overlay ? current : modifier.value;
+            modifier.closest('.dm-Field').hidden = overlay;
+            status.closest('.dm-Field').hidden = !selectedModifier;
+            rotation.closest('.dm-Field').hidden = Boolean(icon.country);
+            const base = overlay ? 'fa-user' : current;
+            const options = [
+                controls.querySelector('[name="icon_scale"]:checked').value,
+                document.getElementById('icon_animation').value,
+                icon.country ? '' : rotation.value,
+                selectedModifier,
+                selectedModifier ? status.value : ''
+            ].filter(Boolean);
+            const classes = ['fa', base, large ? 'fa-lg' : '', ...options].filter(Boolean).join(' ');
+            preview.className = classes;
+            for (const example of document.querySelectorAll('.dm-Previews [data-icon]')) {
+                example.className = ['fa', base, ...options].join(' ');
+            }
+            const snippet = preview.cloneNode(false);
+            snippet.removeAttribute('data-icon');
+            if (icon.country) {
+                snippet.removeAttribute('aria-hidden');
+                snippet.setAttribute('role', 'img');
+                snippet.setAttribute('aria-label', icon.country);
+            }
+            document.getElementById('flag_markup_note').hidden = !icon.country;
+            code.textContent = snippet.outerHTML;
+            document.querySelectorAll('.dm-CopyStatus').forEach(status => status.textContent = '');
+            document.getElementById('icon_classes').textContent = classes;
+
+            const content = icon.country ? '' : getComputedStyle(preview, overlay ? '::after' : '::before').content;
+            const glyph = /^"(.)"$/u.exec(content);
+            unicode.parentElement.hidden = !glyph;
+            unicode.textContent = glyph ? '\\' + glyph[1].codePointAt(0).toString(16) : '';
+            const filename = (icon.sourceName || bareName(current)) + '.svg';
+            download.href = icon.country ? '../images/flags/' + filename
+                : '../svgs/' + (large ? 'large/' : 'small/') + filename;
+        }
+
+        function showIcon() {
+            current = lookup.get(location.hash.slice(1) || 'fa-apex');
+            document.getElementById('icon_details').hidden = !current;
+            document.getElementById('icon_not_found').hidden = Boolean(current);
+            document.title = (current || 'Icon not found') + ' | Oracle Font APEX';
+            if (!current) {
+                download.removeAttribute('href');
+                return;
+            }
+            const country = icons.get(current).country;
+            document.querySelector('.dm-Icon-name').textContent = country ? country + ' (' + current + ')' : current;
+            renderPreview();
+        }
+
+        copyButtons.forEach(button => button.addEventListener('click', async () => {
+            const output = document.getElementById(button.dataset.copy);
+            const status = document.getElementById('copy_status_' + button.dataset.copy.replace('icon_', ''));
+            const value = output.textContent;
+            if (navigator.clipboard?.writeText) {
+                try {
+                    await navigator.clipboard.writeText(value);
+                    if (current && output.textContent === value) status.textContent = 'Copied.';
+                    return;
+                } catch {
+                    // Offer manual copying when the browser denies clipboard access.
+                }
+            }
+            if (!current || output.textContent !== value) return;
+            output.focus();
+            const range = document.createRange();
+            range.selectNodeContents(output);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            status.textContent = 'Value selected. Use your device’s Copy command.';
+        }));
+
+        controls.addEventListener('change', event => {
+            if (event.target.name === 'icon_size') saveSize(event.target.value === 'fa-lg');
+            renderPreview();
+        });
+        window.addEventListener('hashchange', showIcon);
+        syncSizeOnNavigation(showIcon);
+    }
+
+    if (document.getElementById('icon_preview')) {
+        initDetail();
+    } else {
+        initBrowser();
+    }
+})(fontapex);

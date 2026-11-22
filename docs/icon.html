@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html class="no-js" itemscope="itemscope" itemtype="http://schema.org/WebPage" lang="en">
+<html itemscope="itemscope" itemtype="https://schema.org/WebPage" lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
   <title>Icon | Oracle Font APEX</title>
 
   <meta name="title" itemprop="name" content="Oracle Font APEX" />
   <meta name="description" itemprop="description" content="Font APEX is an open source icon library from the Oracle APEX team." />
   <meta name="keywords" content="Oracle, Font, Font Apex, Apex" />
-  <meta name="version" content="22" />
+  <meta name="version" content="2.5.1" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="oracleapex" />
@@ -22,317 +22,324 @@
   <meta property="og:description" content="Font APEX is an open source icon library from the Oracle APEX team." />
   <meta property="og:site_name" content="Oracle Font APEX" />
 
-  <link rel="mask-icon" sizes="all" href="pinned-icon.svg" color="#0572CE" />
+  <link rel="mask-icon" sizes="all" href="pinned-icon.svg" color="#00688c" />
   <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="192x192" href="icon.png" />
-  <meta name="theme-color" content="#0572CE" />
+  <meta name="theme-color" content="#302d2a" />
 
-  <link rel="stylesheet" href="ui.css?v=2.2" type="text/css" />
-  <link rel="stylesheet" href="https://static.oracle.com/cdn/fnd/gallery/2004.1.0/OracleFont/OracleFont.min.css" type="text/css">
+  <link rel="stylesheet" href="ui.css?v=2.5.1" type="text/css" />
   <link rel="stylesheet" href="../css/font-apex.min.css?v=2.5.1" type="text/css" />
+  <link rel="stylesheet" href="https://static.oracle.com/cdn/apex/26.2.1/libraries/oracle-fonts/oraclesans-apex.min.css">
+  <script src="icons.js?v=2.5.1" defer></script>
+  <script src="doc.js?v=2.5.1" defer></script>
 </head>
+
 <body id="top">
+  <a class="dm-SkipLink" href="#main-content">Skip to main content</a>
 
-<header role="banner" class="dm-Header">
-  <div class="dm-Container">
-    <a class="dm-Header-logoLink" href="../index.html">
-      <svg class="dm-Header-logoIcon" role="img" aria-label="Oracle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 24">
-        <title id="dm-Header-logoText">Oracle</title>
-        <path d="M24.6 0C30.9 0 36 5.4 36 12s-5.1 12-11.4 12H11.4C5.1 24 0 18.6 0 12S5.1 0 11.4 0h13.2zm-.3 4H11.7c-4.1 0-7.4 3.6-7.4 8s3.3 8 7.4 8h12.6c4.1 0 7.4-3.6 7.4-8s-3.3-8-7.4-8z" fill-rule="evenodd" clip-rule="evenodd"></path>
-      </svg>
-      <span class="dm-Header-logoLabel">
-        Font APEX
-      </span>
-    </a>
-    <ul class="dm-HeaderNav">
-      <li>
-        <a class="dm-HeaderNav-link" href="https://github.com/oracle/font-apex">
-          <svg class="dm-HeaderNav-icon" aria-hidden="true" viewBox="0 0 16 16">
-            <path d="M8 1.172a7.002 7.002 0 0 0-2.215 13.644c.355.065.483-.154.483-.336 0-.165-.009-.72-.009-1.304 0 0-1.951.419-2.361-.829 0 0-.32-.812-.775-1.022 0 0-.638-.437.046-.428 0 0 .693.054 1.076.72.611 1.075 1.632.765 2.032.583.064-.456.246-.756.446-.939-1.559-.173-3.19-.775-3.19-3.453 0-.767.273-1.395.72-1.878-.073-.183-.31-.894.064-1.86.593-.182 1.933.72 1.933.72a6.626 6.626 0 0 1 3.5 0s1.34-.902 1.923-.72c.383.966.145 1.677.072 1.86a2.69 2.69 0 0 1 .72 1.878c0 2.688-1.64 3.281-3.199 3.453.255.219.474.638.474 1.294v1.924c0 .182.119.401.474.336A7.002 7.002 0 0 0 8 1.172z"/>
-          </svg>
-          <span class="dm-HeaderNav-label">View on GitHub</span>
-        </a>
-      </li>
-      <li>
-        <a class="dm-HeaderNav-link" href="about.html">
-          <span class="dm-HeaderNav-icon fa fa-info-circle-o" aria-hidden="true"></span>
-          <span class="dm-HeaderNav-label">About</span>
-        </a>
-      </li>
-    </ul>
-  </div>
-</header>
-
-<main role="main" class="dm-Body">
-  <div class="dm-Container">
-
-    <h1 class="dm-Icon-name"></h1>
-
-    <div class="dm-Icon">
-
-      <div id="icon_preview" class="dm-IconPreview">
-        <span class="fa" aria-hidden="true" data-icon></span>
-      </div>
-
-      <div class="dm-IconBuilder" aria-controls="icon-output">
-
-        <div class="dm-Field" role="group" aria-labelledby="icon_size_lbl">
-          <div class="dm-FieldLabel" id="icon_size_lbl">Size:</div>
-          <div class="dm-RadioPillSet">
-            <div class="dm-RadioPillSet-option"><input type="radio" id="icon_size_small" name="icon_size" value=""><label for="icon_size_small">Small</label></div>
-            <div class="dm-RadioPillSet-option"><input type="radio" id="icon_size_large" name="icon_size" value="fa-lg"><label for="icon_size_large">Large</label></div>
-          </div>
-        </div>
-
-        <div class="dm-Field" role="group" aria-labelledby="icon_scale_lbl">
-          <div class="dm-FieldLabel" id="icon_scale_lbl">Scale:</div>
-          <div class="dm-RadioPillSet">
-            <div class="dm-RadioPillSet-option"><input type="radio" id="icon_scale_1x" name="icon_scale" value="" checked="checked"><label for="icon_scale_1x">1x</label></div>
-            <div class="dm-RadioPillSet-option"><input type="radio" id="icon_scale_2x" name="icon_scale" value="fa-2x"><label for="icon_scale_2x">2x</label></div>
-            <div class="dm-RadioPillSet-option"><input type="radio" id="icon_scale_3x" name="icon_scale" value="fa-3x"><label for="icon_scale_3x">3x</label></div>
-            <div class="dm-RadioPillSet-option"><input type="radio" id="icon_scale_4x" name="icon_scale" value="fa-4x"><label for="icon_scale_4x">4x</label></div>
-            <div class="dm-RadioPillSet-option"><input type="radio" id="icon_scale_5x" name="icon_scale" value="fa-5x"><label for="icon_scale_5x">5x</label></div>
-          </div>
-        </div>
-
-        <div class="dm-Field" role="group" aria-labelledby="icon_animation_lbl">
-          <label class="dm-FieldLabel" for="icon_animation" id="icon_animation_lbl">Animation:</label>
-          <select id="icon_animation" name="icon_animation" class="">
-            <option value="" selected="selected">Static</option>
-            <option value="fa-anim-spin">Spin</option>
-            <option value="fa-anim-spin-step">Spin in Steps</option>
-            <option value="fa-anim-flash">Flash</option>
-            <option value="fa-anim-horizontal-shake">Horizontal Shake</option>
-            <option value="fa-anim-vertical-shake">Vertical Shake</option>
-          </select>
-        </div>
-
-        <div class="dm-Field" role="group" aria-labelledby="icon_rotate_lbl">
-          <label class="dm-FieldLabel" for="icon_rotate" id="icon_rotate_lbl">Rotate:</label>
-          <select id="icon_rotate" name="icon_rotate" class="">
-            <option value="" selected="selected">Normal</option>
-            <option value="fa-flip-horizontal">Flip Horizontal</option>
-            <option value="fa-flip-vertical">Flip Vertical</option>
-            <option value="fa-rotate-180">Rotate 180</option>
-            <option value="fa-rotate-270">Rotate 270</option>
-            <option value="fa-rotate-90">Rotate 90</option>
-          </select>
-        </div>
-
-        <div class="dm-Field" role="group" aria-labelledby="icon_modifier_lbl">
-          <label class="dm-FieldLabel" for="icon_modifier" id="icon_modifier_lbl">Modifier:</label>
-          <select id="icon_modifier" name="icon_modifier" class="">
-            <option value="" selected="selected">None</option>
-            <option value="fam-25-percent">25 Percent</option>
-            <option value="fam-50-percent">50 Percent</option>
-            <option value="fam-75-percent">75 Percent</option>
-            <option value="fam-100-percent">100 Percent</option>
-            <option value="fam-arrow-down">Arrow Down</option>
-            <option value="fam-arrow-left">Arrow Left</option>
-            <option value="fam-arrow-right">Arrow Right</option>
-            <option value="fam-arrow-up">Arrow Up</option>
-            <option value="fam-blank">Blank</option>
-            <option value="fam-check">Check</option>
-            <option value="fam-circle">Circle</option>
-            <option value="fam-clock">Clock</option>
-            <option value="fam-ellipsis-h">Ellipsis H</option>
-            <option value="fam-ellipsis-v">Ellipsis V</option>
-            <option value="fam-heart">Heart</option>
-            <option value="fam-information">Information</option>
-            <option value="fam-minus">Minus</option>
-            <option value="fam-pause">Pause</option>
-            <option value="fam-play">Play</option>
-            <option value="fam-plus">Plus</option>
-            <option value="fam-sleep">Sleep</option>
-            <option value="fam-star">Star</option>
-            <option value="fam-stop">Stop</option>
-            <option value="fam-warning">Warning</option>
-            <option value="fam-x">X</option>
-          </select>
-        </div>
-
-        <div class="dm-Field" role="group" aria-labelledby="icon_modifier_status_lbl">
-          <label class="dm-FieldLabel" for="icon_modifier_status" id="icon_modifier_status_lbl">Status</label>
-          <select id="icon_modifier_status" name="icon_modifier_status" class="">
-            <option value="fam-is-success" selected="selected">Success</option>
-            <option value="fam-is-warning">Warning</option>
-            <option value="fam-is-danger">Danger</option>
-            <option value="fam-is-info">Info</option>
-            <option value="fam-is-disabled">Disabled</option>
-          </select>
-        </div>
-
-      </div>
-
+  <header role="banner" class="dm-Header">
+    <div class="dm-Container">
+      <a class="dm-Header-logoLink" href="../index.html">
+        <svg class="dm-Header-logoIcon" role="img" aria-label="Oracle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 24">
+          <title id="dm-Header-logoText">Oracle</title>
+          <path d="M24.6 0C30.9 0 36 5.4 36 12s-5.1 12-11.4 12H11.4C5.1 24 0 18.6 0 12S5.1 0 11.4 0h13.2zm-.3 4H11.7c-4.1 0-7.4 3.6-7.4 8s3.3 8 7.4 8h12.6c4.1 0 7.4-3.6 7.4-8s-3.3-8-7.4-8z" fill-rule="evenodd" clip-rule="evenodd"></path>
+        </svg>
+        <span class="dm-Header-logoLabel">
+          Font APEX
+        </span>
+      </a>
+      <ul class="dm-HeaderNav">
+        <li>
+          <a class="dm-HeaderNav-link" href="https://github.com/oracle/font-apex">
+            <svg class="dm-HeaderNav-icon" aria-hidden="true" viewBox="0 0 16 16">
+              <path d="M8 1.172a7.002 7.002 0 0 0-2.215 13.644c.355.065.483-.154.483-.336 0-.165-.009-.72-.009-1.304 0 0-1.951.419-2.361-.829 0 0-.32-.812-.775-1.022 0 0-.638-.437.046-.428 0 0 .693.054 1.076.72.611 1.075 1.632.765 2.032.583.064-.456.246-.756.446-.939-1.559-.173-3.19-.775-3.19-3.453 0-.767.273-1.395.72-1.878-.073-.183-.31-.894.064-1.86.593-.182 1.933.72 1.933.72a6.626 6.626 0 0 1 3.5 0s1.34-.902 1.923-.72c.383.966.145 1.677.072 1.86a2.69 2.69 0 0 1 .72 1.878c0 2.688-1.64 3.281-3.199 3.453.255.219.474.638.474 1.294v1.924c0 .182.119.401.474.336A7.002 7.002 0 0 0 8 1.172z" />
+            </svg>
+            <span class="dm-HeaderNav-label">View on GitHub</span>
+          </a>
+        </li>
+        <li>
+          <a class="dm-HeaderNav-link" href="about.html">
+            <span class="dm-HeaderNav-icon fa fa-info-circle-o" aria-hidden="true"></span>
+            <span class="dm-HeaderNav-label">About</span>
+          </a>
+        </li>
+      </ul>
     </div>
+  </header>
 
-    <div id="icon-output" class="dm-IconOutput" role="region" aria-live="polite">
-
-      <div class="dm-IconOutput-col dm-IconOutput-col--html">
-        <h2>HTML</h2>
-        <code class="dm-Code" id="icon_code" tabindex="0"></code>
-      </div>
-
-      <div class="dm-IconOutput-col dm-IconOutput-col--class">
-        <h2>Class</h2>
-        <code class="dm-Code" id="icon_classes" tabindex="0"></code>
-      </div>
-
-      <div class="dm-IconOutput-col dm-IconOutput-col--char">
-        <h2>Unicode</h2>
-        <code class="dm-Code" id="icon_char" tabindex="0"></code>
-      </div>
-
-      <div class="dm-IconOutput-col dm-IconOutput-col--download">
-        <a class="pv-Button pv-Button--primary" id="icon_download" download>
-          <span class="fa fa-download" aria-hidden="true"></span>
-          Download SVG
-        </a>
-      </div>
-
+  <a id="main-content"></a>
+  <main class="dm-Body">
+    <div class="dm-Container" id="icon_not_found" hidden>
+      <h1>Icon not found</h1>
+      <p><a href="../index.html">Browse Font APEX icons</a></p>
     </div>
+    <noscript>
+      <div class="dm-Container">
+        <p>Enable JavaScript to preview this icon, or read <a href="about.html">how to use Font APEX</a>.</p>
+      </div>
+    </noscript>
+    <div class="dm-Container" id="icon_details" hidden>
 
-    <div class="dm-Examples">
+      <h1 class="dm-Icon-name"></h1>
 
-      <h2>Examples</h2>
+      <div class="dm-Icon">
 
-      <div class="dm-Previews">
+        <div id="icon_preview" class="dm-IconPreview">
+          <span class="fa" aria-hidden="true" data-icon></span>
+        </div>
 
-        <div class="dm-Preview dm-Preview--noPad">
+        <div class="dm-IconBuilder" aria-controls="icon-output">
 
-          <div class="pv-TreeNav">
-            <ul>
-              <li>
-                <span class="fa fa-home" aria-hidden="true"></span>
-                Home
-              </li>
-              <li class="is-active">
+          <div class="dm-Field" role="group" aria-labelledby="icon_size_lbl">
+            <div class="dm-FieldLabel" id="icon_size_lbl">Size:</div>
+            <div class="dm-RadioPillSet">
+              <div class="dm-RadioPillSet-option"><input type="radio" id="icon_size_small" name="icon_size" value=""><label for="icon_size_small">Small</label></div>
+              <div class="dm-RadioPillSet-option"><input type="radio" id="icon_size_large" name="icon_size" value="fa-lg"><label for="icon_size_large">Large</label></div>
+            </div>
+          </div>
+
+          <div class="dm-Field" role="group" aria-labelledby="icon_scale_lbl">
+            <div class="dm-FieldLabel" id="icon_scale_lbl">Scale:</div>
+            <div class="dm-RadioPillSet">
+              <div class="dm-RadioPillSet-option"><input type="radio" id="icon_scale_1x" name="icon_scale" value="" checked="checked"><label for="icon_scale_1x">1x</label></div>
+              <div class="dm-RadioPillSet-option"><input type="radio" id="icon_scale_2x" name="icon_scale" value="fa-2x"><label for="icon_scale_2x">2x</label></div>
+              <div class="dm-RadioPillSet-option"><input type="radio" id="icon_scale_3x" name="icon_scale" value="fa-3x"><label for="icon_scale_3x">3x</label></div>
+              <div class="dm-RadioPillSet-option"><input type="radio" id="icon_scale_4x" name="icon_scale" value="fa-4x"><label for="icon_scale_4x">4x</label></div>
+              <div class="dm-RadioPillSet-option"><input type="radio" id="icon_scale_5x" name="icon_scale" value="fa-5x"><label for="icon_scale_5x">5x</label></div>
+            </div>
+          </div>
+
+          <div class="dm-Field" role="group" aria-labelledby="icon_animation_lbl">
+            <label class="dm-FieldLabel" for="icon_animation" id="icon_animation_lbl">Animation:</label>
+            <select id="icon_animation" name="icon_animation" class="">
+              <option value="" selected="selected">Static</option>
+              <option value="fa-anim-spin">Spin</option>
+              <option value="fa-anim-spin-step">Spin in Steps</option>
+              <option value="fa-anim-flash">Flash</option>
+              <option value="fa-anim-horizontal-shake">Horizontal Shake</option>
+              <option value="fa-anim-vertical-shake">Vertical Shake</option>
+            </select>
+          </div>
+
+          <div class="dm-Field" role="group" aria-labelledby="icon_rotate_lbl">
+            <label class="dm-FieldLabel" for="icon_rotate" id="icon_rotate_lbl">Rotate:</label>
+            <select id="icon_rotate" name="icon_rotate" class="">
+              <option value="" selected="selected">Normal</option>
+              <option value="fa-flip-horizontal">Flip Horizontal</option>
+              <option value="fa-flip-vertical">Flip Vertical</option>
+              <option value="fa-rotate-180">Rotate 180</option>
+              <option value="fa-rotate-270">Rotate 270</option>
+              <option value="fa-rotate-90">Rotate 90</option>
+            </select>
+          </div>
+
+          <div class="dm-Field" role="group" aria-labelledby="icon_modifier_lbl">
+            <label class="dm-FieldLabel" for="icon_modifier" id="icon_modifier_lbl">Modifier:</label>
+            <select id="icon_modifier" name="icon_modifier" class="">
+              <option value="" selected="selected">None</option>
+            </select>
+          </div>
+
+          <div class="dm-Field" role="group" aria-labelledby="icon_modifier_status_lbl">
+            <label class="dm-FieldLabel" for="icon_modifier_status" id="icon_modifier_status_lbl">Status</label>
+            <select id="icon_modifier_status" name="icon_modifier_status" class="">
+              <option value="fam-is-success" selected="selected">Success</option>
+              <option value="fam-is-warning">Warning</option>
+              <option value="fam-is-danger">Danger</option>
+              <option value="fam-is-info">Info</option>
+              <option value="fam-is-disabled">Disabled</option>
+            </select>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div id="icon-output" class="dm-IconOutput" role="region" aria-label="Icon markup and download">
+
+        <div class="dm-IconOutput-col dm-IconOutput-col--html">
+          <h2>HTML</h2>
+          <div class="dm-CodeField">
+            <code class="dm-Code" id="icon_code" tabindex="0"></code>
+            <button type="button" class="dm-CopyButton" data-copy="icon_code" title="Copy HTML" aria-label="Copy HTML">
+              <span class="fa fa-copy" aria-hidden="true"></span>
+            </button>
+          </div>
+          <span class="dm-CopyStatus" id="copy_status_html" role="status"></span>
+          <p id="flag_markup_note" hidden>If nearby text already names the flag, replace <code>role</code> and <code>aria-label</code> with <code>aria-hidden="true"</code>.</p>
+        </div>
+
+        <div class="dm-IconOutput-col dm-IconOutput-col--class">
+          <h2>Class</h2>
+          <div class="dm-CodeField">
+            <code class="dm-Code" id="icon_classes" tabindex="0"></code>
+            <button type="button" class="dm-CopyButton" data-copy="icon_classes" title="Copy class" aria-label="Copy class">
+              <span class="fa fa-copy" aria-hidden="true"></span>
+            </button>
+          </div>
+          <span class="dm-CopyStatus" id="copy_status_class" role="status"></span>
+        </div>
+
+        <div class="dm-IconOutput-col dm-IconOutput-col--char">
+          <h2>Unicode</h2>
+          <div class="dm-CodeField">
+            <code class="dm-Code" id="icon_char" tabindex="0"></code>
+            <button type="button" class="dm-CopyButton" data-copy="icon_char" title="Copy Unicode" aria-label="Copy Unicode">
+              <span class="fa fa-copy" aria-hidden="true"></span>
+            </button>
+          </div>
+          <span class="dm-CopyStatus" id="copy_status_unicode" role="status"></span>
+        </div>
+
+        <div class="dm-IconOutput-col dm-IconOutput-col--download">
+          <a class="pv-Button pv-Button--primary" id="icon_download" download>
+            <span class="fa fa-download" aria-hidden="true"></span>
+            Download SVG
+          </a>
+        </div>
+
+      </div>
+
+      <div class="dm-Examples">
+
+        <h2>Examples</h2>
+
+        <div class="dm-Previews">
+
+          <div class="dm-Preview dm-Preview--noPad">
+
+            <div class="pv-TreeNav">
+              <ul>
+                <li>
+                  <span class="fa fa-home" aria-hidden="true"></span>
+                  Home
+                </li>
+                <li class="is-active">
+                  <span class="fa" aria-hidden="true" data-icon></span>
+                  Example Menu Item
+                </li>
+                <li>
+                  <span class="fa fa-gears" aria-hidden="true"></span>
+                  Settings
+                </li>
+                <li>
+                  <span class="fa fa-envelope-o" aria-hidden="true"></span>
+                  Contact
+                </li>
+                <li>
+                  <span class="fa fa-info-circle-o" aria-hidden="true"></span>
+                  About
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+          <div class="dm-Preview">
+
+            <div class="pv-Alert force-fa-lg">
+              <div class="pv-Alert-icon">
+                <span class="fa fam-warning fam-is-danger" aria-hidden="true" data-icon></span>
+              </div>
+              <div class="pv-Alert-title">
+                Access Denied
+              </div>
+              <div class="pv-Alert-body">You have insufficient privilege. Please contact your Administrator for more information.</div>
+            </div>
+
+          </div>
+
+          <div class="dm-Preview">
+
+            <div class="pv-ButtonSet">
+              <span class="pv-Button pv-Button--primary">
                 <span class="fa" aria-hidden="true" data-icon></span>
-                Example Menu Item
-              </li>
-              <li>
-                <span class="fa fa-gears" aria-hidden="true"></span>
-                Settings
-              </li>
-              <li>
-                <span class="fa fa-envelope-o" aria-hidden="true"></span>
-                Contact
-              </li>
-              <li>
-                <span class="fa fa-info-circle-o" aria-hidden="true"></span>
-                About
-              </li>
-            </ul>
-          </div>
-
-        </div>
-
-        <div class="dm-Preview">
-
-          <div class="pv-Alert force-fa-lg">
-            <div class="pv-Alert-icon">
-              <span class="fa fam-warning fam-is-danger" aria-hidden="true" data-icon></span>
-            </div>
-            <div class="pv-Alert-title">
-              Access Denied
-            </div>
-            <div class="pv-Alert-body">You have insufficient privilege. Please contact your Administrator for more information.</div>
-          </div>
-
-        </div>
-
-        <div class="dm-Preview">
-
-          <div class="pv-ButtonSet">
-            <span class="pv-Button pv-Button--primary">
-              <span class="fa" aria-hidden="true" data-icon></span>
-              Example Primary Button
-            </span>
-            <span class="pv-Button">
-              <span class="fa" aria-hidden="true" data-icon></span>
-              Example Default Button
-            </span>
-          </div>
-
-        </div>
-
-        <div class="dm-Preview">
-
-          <div class="pv-Card force-fa-lg">
-            <div class="pv-Card-icon">
-              <span class="fa" aria-hidden="true" data-icon></span>
-            </div>
-            <div class="pv-Card-title">
-              ACME Incorporated
-              <span>Reston, VA</span>
-            </div>
-            <div class="pv-Card-body">Mauris nulla. Integer urna. Vivamus molestie dapibus ligula.</div>
-          </div>
-
-        </div>
-
-        <div class="dm-Preview">
-
-          <div class="pv-MediaList">
-            <ul>
-              <li>
-                <span class="fa fa-cloud" aria-hidden="true"></span>
-                <div>
-                  <strong>Titan Technologies</strong>
-                  Mauris nulla. Integer urna. Vivamus molestie dapibus ligula. Aliquam erat volutpat. Nulla dignissim. Maecenas ornare egestas ligula. Nullam feugiat placerat
-                </div>
-              </li>
-              <li class="is-active">
+                Example Primary Button
+              </span>
+              <span class="pv-Button">
                 <span class="fa" aria-hidden="true" data-icon></span>
-                <div>
-                  <strong>ACME Incorporated</strong>
-                  Mauris nulla. Integer urna. Vivamus molestie dapibus ligula. Aliquam erat volutpat. Nulla dignissim. Maecenas ornare egestas ligula. Nullam feugiat placerat
-                </div>
-              </li>
-              <li>
-                <span class="fa fa-building" aria-hidden="true"></span>
-                <div>
-                  <strong>Voltron LLC</strong>
-                  Mauris nulla. Integer urna. Vivamus molestie dapibus ligula. Aliquam erat volutpat. Nulla dignissim. Maecenas ornare egestas ligula. Nullam feugiat placerat
-                </div>
-              </li>
-              <li>
-                <span class="fa fa-bug" aria-hidden="true"></span>
-                <div>
-                  <strong>Ant Corp</strong>
-                  Mauris nulla. Integer urna. Vivamus molestie dapibus ligula. Aliquam erat volutpat. Nulla dignissim. Maecenas ornare egestas ligula. Nullam feugiat placerat
-                </div>
-              </li>
-            </ul>
+                Example Default Button
+              </span>
+            </div>
+
           </div>
 
-        </div>
+          <div class="dm-Preview">
 
-        <div class="dm-Preview dm-Preview--noPad">
-          <div class="pv-HeroRegion force-fa-lg">
-            <span class="fa" aria-hidden="true" data-icon></span>
-            <div>
-              <strong>ACME Incorporated</strong>
-              Integer urna. Vivamus molestie dapibus ligula.
+            <div class="pv-Card force-fa-lg">
+              <div class="pv-Card-icon">
+                <span class="fa" aria-hidden="true" data-icon></span>
+              </div>
+              <div class="pv-Card-title">
+                ACME Incorporated
+                <span>Reston, VA</span>
+              </div>
+              <div class="pv-Card-body">Mauris nulla. Integer urna. Vivamus molestie dapibus ligula.</div>
+            </div>
+
+          </div>
+
+          <div class="dm-Preview">
+
+            <div class="pv-MediaList">
+              <ul>
+                <li>
+                  <span class="fa fa-cloud" aria-hidden="true"></span>
+                  <div>
+                    <strong>Titan Technologies</strong>
+                    Mauris nulla. Integer urna. Vivamus molestie dapibus ligula. Aliquam erat volutpat. Nulla dignissim. Maecenas ornare egestas ligula. Nullam feugiat placerat
+                  </div>
+                </li>
+                <li class="is-active">
+                  <span class="fa" aria-hidden="true" data-icon></span>
+                  <div>
+                    <strong>ACME Incorporated</strong>
+                    Mauris nulla. Integer urna. Vivamus molestie dapibus ligula. Aliquam erat volutpat. Nulla dignissim. Maecenas ornare egestas ligula. Nullam feugiat placerat
+                  </div>
+                </li>
+                <li>
+                  <span class="fa fa-building" aria-hidden="true"></span>
+                  <div>
+                    <strong>Voltron LLC</strong>
+                    Mauris nulla. Integer urna. Vivamus molestie dapibus ligula. Aliquam erat volutpat. Nulla dignissim. Maecenas ornare egestas ligula. Nullam feugiat placerat
+                  </div>
+                </li>
+                <li>
+                  <span class="fa fa-bug" aria-hidden="true"></span>
+                  <div>
+                    <strong>Ant Corp</strong>
+                    Mauris nulla. Integer urna. Vivamus molestie dapibus ligula. Aliquam erat volutpat. Nulla dignissim. Maecenas ornare egestas ligula. Nullam feugiat placerat
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+          <div class="dm-Preview dm-Preview--noPad">
+            <div class="pv-HeroRegion force-fa-lg">
+              <span class="fa" aria-hidden="true" data-icon></span>
+              <div>
+                <strong>ACME Incorporated</strong>
+                Integer urna. Vivamus molestie dapibus ligula.
+              </div>
             </div>
           </div>
+
         </div>
 
       </div>
 
     </div>
+  </main>
 
-  </div>
-</main>
+  <footer role="contentinfo" class="dm-Footer">
+    <div class="dm-Container">
+      <p>&copy; Oracle</p>
+    </div>
+  </footer>
 
-<footer role="contentinfo" class="dm-Footer">
-  <div class="dm-Container">
-    <p>&copy; Oracle</p>
-  </div>
-</footer>
-
-<script src="icons.js"></script>
-<script src="doc.js"></script>
 
 </body>
+
 </html>
